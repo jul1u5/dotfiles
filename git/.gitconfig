@@ -1,5 +1,7 @@
 [user]
-    email = marozas.julius@gmail.com
-    name = Julius Marozas
+	email = marozas.julius@gmail.com
+	name = Julius Marozas
 [alias]
-    tree = log --graph --decorate --pretty=oneline --abbrev-commit
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+[commit]
+	gpgsign = true
