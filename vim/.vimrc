@@ -3,6 +3,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'bling/vim-airline'
+Plug 'cespare/vim-toml'
+Plug 'chrisbra/Colorizer'
 
 call plug#end()
 
@@ -35,3 +37,4 @@ set clipboard=unnamedplus	" Use system clipboard to copy and pase
 " set path+=**			" Search down into subfolders
 set wildmenu			" Display suggestions when using autocompletion
 
+let g:colorizer_auto_color = 1
