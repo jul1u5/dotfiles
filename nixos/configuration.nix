@@ -1,13 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [ ./hardware-configuration.nix
+      ./nixos.nix
+      # (builtins.fetchTarball {
+      #   sha256 = "12riba9dlchk0cvch2biqnikpbq4vs22gls82pr45c3vzc3vmwq9";
+      #   url = "https://github.com/msteen/nixos-vsliveshare/archive/e6ea0b04de290ade028d80d20625a58a3603b8d7.tar.gz";
+      # })
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -18,45 +18,34 @@
   };
 
   networking = {
-    hostName = "nixos"; # Define your hostname.
+    hostName = "nixos";
     networkmanager.enable = true;
 
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
-
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
   };
 
   hardware = {
     enableRedistributableFirmware = true;
+    opengl.driSupport32Bit = true;
     pulseaudio.enable = true;
+    pulseaudio.support32Bit = true;
+
+    cpu.intel.updateMicrocode = true;
   };
 
   sound.enable = true;
 
-  # Select internationalisation properties.
   i18n = {
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
   };
 
-  # Set your time zone.
   time.timeZone = "Europe/Vilnius";
 
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
-    vim
     file
     binutils
     usbutils
@@ -69,7 +58,6 @@
     libfprint
 
     xclip
-    xcompmgr
     xscreensaver
     xsettingsd
     xbrightness
@@ -83,20 +71,38 @@
     rofi
     trayer
     taffybar
-    
+
     ripgrep
     fd
     bat
     exa
-    
+
     firefox
     vscode
     emacs
+
+    plata-theme
+    paper-icon-theme
+    papirus-icon-theme
   ];
 
+  environment.variables = {
+    # Touch screen in firefox
+    MOZ_USE_XINPUT2 = "1";
+
+    # rofi
+    TERMINAL = "alacritty";
+  };
+
+  # GTK icon theme
+  # environment.profileRelativeEnvVars.XCURSOR_PATH = [ "/share/icons" ];
+  environment.sessionVariables = {
+    GDK_PIXBUF_MODULE_FILE = "$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)";
+    GTK_DATA_PREFIX = [ "${config.system.path}" ];
+    # GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
+  };
+
   fonts = {
-    # enableDefaultFonts = true;
-    
     fonts = with pkgs; [
       google-fonts
       fira-code
@@ -105,40 +111,70 @@
     ];
 
     fontconfig = {
-      # penultimate.enable = false;
+      penultimate.enable = false;
       defaultFonts = {
-	sansSerif = [ "Overpass" ];
+        sansSerif = [ "Overpass" ];
         monospace = [ "Fira Code" ];
       };
     };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   programs = {
+    vim.defaultEditor = true;
     fish.enable = true;
+    slock.enable = true;
+    dconf.enable = true;
     mtr.enable = true;
     gnupg.agent = { enable = true; enableSSHSupport = true; };
   };
 
   services = {
     nixosManual.showManual = true;
-    
+
     locate.enable = true;
     openssh.enable = true;
     printing.enable = true;
     upower.enable = true;
     fprintd.enable = true;
 
+    dbus.packages = [ pkgs.gnome3.dconf ];
+
+    # logind.lidSwitch = "lock";
+
+    # vsliveshare = {
+    #   enable = true;
+    #   enableWritableWorkaround = true;
+    #   enableDiagnosticsWorkaround = true;
+    #   extensionsDir = "/home/julius/.vscode/extensions";
+    # };
+
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
-      layout = "us";
-      xkbOptions = "eurosign:e,ctrl:nocaps,compose:rctrl";
+      layout = "us,lt";
+      xkbOptions = "grp:shifts_toggle,eurosign:e,ctrl:nocaps,compose:rctrl";
 
-      # displayManager.sddm.enable = true;
+      displayManager.lightdm = {
+        enable = true;
+        greeters.gtk = {
+          enable = true;
+          theme = {
+            package = pkgs.plata-theme;
+            name = "Plata-Noir";
+          };
+          iconTheme = {
+            package = pkgs.papirus-icon-theme;
+            name = "Papirus-Dark";
+          };
+          cursorTheme = {
+            package = pkgs.paper-icon-theme;
+            name = "Paper";
+          };
+        };
+      };
+
       desktopManager = {
-        # plasma5.enable = true;
+        gnome3.enable = true;
         xterm.enable = false;
       };
 
@@ -168,9 +204,28 @@
         ignorePalm = true;
       };
 
-      wacom.enable = true;
+      screenSection = ''
+        Option "RandRRotation" "on"
+      '';
 
+      wacom.enable = true;
       modules = [pkgs.xf86_input_wacom ];
+    };
+
+    compton = {
+      enable = true;
+      backend = "glx";
+      fade = true;
+      fadeDelta = 4;
+      vSync = "opengl";
+      extraOptions = ''
+        paint-on-overlay = true;
+        glx-no-stencil = true;
+        glx-no-rebind-pixmap = true;
+        glx-swap-method = "buffer-age";
+        sw-opti = true;
+        xrender-sync-fence = true;
+      '';
     };
   };
 
@@ -181,13 +236,16 @@
     shell = pkgs.fish;
   };
 
+  nix.allowedUsers = [ "root" "@wheel" ];
+
   security = {
+    sudo.wheelNeedsPassword = false;
     pam.services = {
       login.fprintAuth = true;
       xscreensaver.fprintAuth = true;
     };
   };
-  
+
   system.autoUpgrade.enable = true;
 
   # This value determines the NixOS release with which your system is to be
