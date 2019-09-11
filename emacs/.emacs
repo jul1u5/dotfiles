@@ -1,56 +1,84 @@
+;;; RCs
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
+(package-initialize)                    ;Package.el won't shut up
+                                        ;without this line being
+                                        ;specificaly here and not
+                                        ;anywhere else ~_~
+(load "~/.emacs.rc/rc.el")
 
-(setq inhibit-startup-screen t)
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(toggle-scroll-bar 0)
-(delete-selection-mode 1)
-(ido-mode 1)
-(set-default-font "Fira Code-12")
+(load "~/.emacs.rc/misc-rc.el")
+(load "~/.emacs.rc/appearance-rc.el")
+(load "~/.emacs.rc/ido-smex-rc.el")
+(load "~/.emacs.rc/ccmode-rc.el")
+(load "~/.emacs.rc/paredit-rc.el")
+(load "~/.emacs.rc/emacs-lisp-rc.el")
+(load "~/.emacs.rc/haskell-mode-rc.el")
+(load "~/.emacs.rc/whitespace-mode-rc.el")
+(load "~/.emacs.rc/magit-rc.el")
+(load "~/.emacs.rc/multiple-cursors-rc.el")
+(load "~/.emacs.rc/openwith-rc.el")
+(load "~/.emacs.rc/dired-rc.el")
+(load "~/.emacs.rc/helm-rc.el")
+(load "~/.emacs.rc/yasnippet-rc.el")
+(load "~/.emacs.rc/rainbow-rc.el")
+(load "~/.emacs.rc/word-wrap-rc.el")
+(load "~/.emacs.rc/js2-mode-rc.el")
+(load "~/.emacs.rc/nxml-mode-rc.el")
+(load "~/.emacs.rc/tramp-rc.el")
+(load "~/.emacs.rc/org-mode-rc.el")
+(load "~/.emacs.rc/org-cliplink-rc.el")
+(load "~/.emacs.rc/org-babel-rc.el")
+(load "~/.emacs.rc/org-capture-rc.el")
+(load "~/.emacs.rc/autocommit-rc.el")
+(load "~/.emacs.rc/powershell-rc.el")
+(load "~/.emacs.rc/eldoc-mode-rc.el")
+(load "~/.emacs.rc/recentf-mode-rc.el")
+(load "~/.emacs.rc/company-rc.el")
+(load "~/.emacs.rc/tide-rc.el")
+(load "~/.emacs.rc/editorconfig-rc.el")
+(load "~/.emacs.rc/nasm-mode-rc.el")
+(load "~/.emacs.rc/latex-mode-rc.el")
+(load "~/.emacs.rc/agda2-mode-rc.el")
+(load "~/.emacs.rc/move-text-rc.el")
 
-(setq backup-directory-alist '(("." . "~/.emacs_saves")))
+(add-to-list 'auto-mode-alist '("\\.ebi\\'" . lisp-mode))
 
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-(global-set-key (kbd "C-x g") 'magit-status)
-
-(move-text-default-bindings)
-
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (gruber-darker)))
- '(custom-safe-themes
-   (quote
-    ("47ec21abaa6642fefec1b7ace282221574c2dd7ef7715c099af5629926eb4fd7" default)))
- '(package-selected-packages
-   (quote
-    (multiple-cursors rainbow-mode ido-completing-read+ csgo-conf-mode amx move-text haskell-mode magit gruber-darker-theme smex))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+;;; Packages that don't require configuration
+(rc/require
+ 'scala-mode
+ 'd-mode
+ 'yaml-mode
+ 'glsl-mode
+ 'tuareg
+ 'lua-mode
+ 'less-css-mode
+ 'graphviz-dot-mode
+ 'clojure-mode
+ 'cmake-mode
+ 'rust-mode
+ 'csharp-mode
+ 'nim-mode
+ 'jinja2-mode
+ 'markdown-mode
+ 'purescript-mode
+ 'nix-mode
+ 'dockerfile-mode
+ 'love-minor-mode
+ 'toml-mode
+ 'nginx-mode
+ 'kotlin-mode
+ 'go-mode
+ 'php-mode
+ 'racket-mode
+ 'qml-mode
+ 'ag
+ 'fsharp-mode
+ 'hindent
+ 'elpy
+ 'typescript-mode
  )
+
+(load "~/.emacs.shadow/shadow-rc.el" t)
+
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file)
