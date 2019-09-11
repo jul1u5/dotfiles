@@ -5,3 +5,7 @@
 	tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [commit]
 	gpgsign = true
+[color]
+	ui = auto
+[core]
+	autocrlf = input
