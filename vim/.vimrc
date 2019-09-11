@@ -1,9 +1,3 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
@@ -14,33 +8,69 @@ Plug 'chrisbra/Colorizer'
 
 call plug#end()
 
-syntax on			" Syntax highlighting
-colorscheme gruvbox		" Color scheme
+" Syntax highlighting
+syntax on
+
+" Color scheme
+colorscheme gruvbox
 set background=dark
 highlight Normal ctermbg=None
-set number			" Show line numbers
-set showbreak=+++		" Wrap-broken line prefix
-set textwidth=100		" Line wrap (number of cols)
-set showmatch			" Highlight matching brace
 
-set hlsearch			" Highlight all search results
-set smartcase			" Enable smart-case search
-set ignorecase			" Always case-insensitive
-set incsearch			" Searches for strings incrementally
+" Show line numbers
+set number
 
-set autoindent			" Auto-indent new lines
-set shiftwidth=4		" Number of auto-indent spaces
-set smartindent			" Enable smart-indent
-set smarttab			" Enable smart-tabs
-set softtabstop=4		" Number of spaces per Tab
+" Wrap-broken line prefix
+set showbreak=+++
 
-set ruler			" Show row and column ruler information
+" Line wrap (number of cols)
+set textwidth=100
 
-set undolevels=1000		" Number of undo levels
-set backspace=indent,eol,start	" Backspace behaviour
-set clipboard=unnamedplus	" Use system clipboard to copy and pase
+" Highlight matching brace
+set showmatch
 
-" set path+=**			" Search down into subfolders
-set wildmenu			" Display suggestions when using autocompletion
+" Highlight all search results
+set hlsearch
+
+" Enable smart-case search
+set smartcase
+
+" Always case-insensitive
+set ignorecase
+
+" Searches for strings incrementally
+set incsearch
+
+" Auto-indent new lines
+set autoindent
+
+" Number of auto-indent spaces
+set shiftwidth=2
+
+" Enable smart-indent
+set smartindent
+
+" Enable smart-tabs
+set smarttab
+
+" Number of spaces per tab
+set softtabstop=2
+
+" Show row and column ruler information
+set ruler
+
+" Number of undo levels
+set undolevels=1000
+
+" Backspace behaviour
+set backspace=indent,eol,start
+
+" Use system clipboard to copy and pase
+set clipboard=unnamedplus
+
+" Search down into subfolders
+" set path+=**
+
+" Display suggestions when using autocompletion
+set wildmenu
 
 let g:colorizer_auto_color = 1
