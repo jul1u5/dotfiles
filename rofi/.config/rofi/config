@@ -4,8 +4,8 @@ rofi.color-normal: #00000000, #CACACA, #00000000, #000000, #3F8AC2
 rofi.color-urgent: argb:00000000, #f43753, argb:00000000, argb:00000000, #BE302F
 rofi.color-active: argb:00000000, #49bbfb, argb:00000000, argb:00000000, #BE302F
 rofi.font: SF Pro Display 24
-rofi.combi-modi: window,drun,ssh
-rofi.modi: combi
+rofi.combi-modi: window,drun,ssh,calc
+rofi.modi: combi,calc
 rofi.width: 50
 rofi.lines: 5
 rofi.bw: 0
