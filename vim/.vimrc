@@ -1,10 +1,16 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
-Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'bling/vim-airline'
-Plug 'cespare/vim-toml'
+Plug 'junegunn/fzf.vim'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'chrisbra/Colorizer'
+Plug 'scrooloose/nerdtree'
+" Plug 'ycm-core/YouCompleteMe'
+
+Plug 'cespare/vim-toml'
+Plug 'LnL7/vim-nix'
+Plug 'PotatoesMaster/i3-vim-syntax'
 
 call plug#end()
 
@@ -42,6 +48,9 @@ set incsearch
 
 " Auto-indent new lines
 set autoindent
+
+" Convert tabs into spaces
+set expandtab
 
 " Number of auto-indent spaces
 set shiftwidth=2
