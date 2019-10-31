@@ -1,20 +1,30 @@
 { config, pkgs, ... }:
 
-{
+let
+  all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
+in {
   imports =
     [ ./hardware-configuration.nix
+      ./cachix.nix
       ./nixos.nix
-      # (builtins.fetchTarball {
-      #   sha256 = "12riba9dlchk0cvch2biqnikpbq4vs22gls82pr45c3vzc3vmwq9";
-      #   url = "https://github.com/msteen/nixos-vsliveshare/archive/e6ea0b04de290ade028d80d20625a58a3603b8d7.tar.gz";
-      # })
+      ./vscode.nix
+      (builtins.fetchTarball {
+        sha256 = "12riba9dlchk0cvch2biqnikpbq4vs22gls82pr45c3vzc3vmwq9";
+        url = "https://github.com/msteen/nixos-vsliveshare/archive/e6ea0b04de290ade028d80d20625a58a3603b8d7.tar.gz";
+      })
     ];
 
-  # Use the systemd-boot EFI boot loader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
+    plymouth.enable = true;
     loader = {
-      systemd-boot.enable = true;
+      # Use the systemd-boot EFI boot loader.
+      systemd-boot = {
+        enable = true;
+        consoleMode = "max";
+        editor = false;
+        configurationLimit = 5;
+      };
       efi.canTouchEfiVariables = true;
       grub.useOSProber = true;
     };
@@ -23,6 +33,8 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    # useDHCP = false;
+    # wicd.enable = true;
 
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
   };
@@ -43,9 +55,21 @@
     defaultLocale = "en_US.UTF-8";
   };
 
-  time.timeZone = "Europe/Vilnius";
+  # time.timeZone = "Europe/Vilnius";
+  location = {
+    provider = "geoclue2";
+  };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      firefox.enableGnomeExtensions = true;
+    };
+    latestPackages = [
+      "vscode"
+      "vscode-extensions"
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     wget
@@ -58,12 +82,11 @@
     ncdu
     zip
     unzip
-    libfprint
 
     xclip
-    xscreensaver
-    xsettingsd
     xbrightness
+    xsecurelock
+    clipmenu
 
     neofetch
     gotop
@@ -87,9 +110,22 @@
     plata-theme
     paper-icon-theme
     papirus-icon-theme
+
+    # libfprint
+
+    (all-hies.unstableFallback.selection { selector = p: { inherit (p) ghc864 ghc865; }; })
+    (import (builtins.fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master") {}).ghcide-ghc865
+  ];
+
+  vscode.user = "julius";
+  vscode.homeDir = "/home/julius";
+  vscode.extensions = with pkgs.vscode-extensions; [
+    ms-vscode.cpptools
   ];
 
   environment.variables = {
+    BROWSER = "firefox";
+
     # Touch screen in firefox
     MOZ_USE_XINPUT2 = "1";
 
@@ -107,78 +143,107 @@
 
   fonts = {
     fonts = with pkgs; [
-      google-fonts
+      corefonts
       fira-code
-      overpass
+      fira-code-symbols
       font-awesome-ttf
+      freefont_ttf
+      google-fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      overpass
     ];
 
+    enableDefaultFonts = true;
+
     fontconfig = {
-      penultimate.enable = false;
       defaultFonts = {
-        sansSerif = [ "Overpass" ];
-        monospace = [ "Fira Code" ];
+        sansSerif = [ "Overpass" "Noto Color Emoji" ];
+        monospace = [ "Fira Code" "Fira Code Symbol" "Noto Sans Mono CJK SC"];
       };
     };
   };
 
   programs = {
+    light.enable = true;
     vim.defaultEditor = true;
     fish.enable = true;
+    sway.enable = true;
     slock.enable = true;
     dconf.enable = true;
     mtr.enable = true;
+    adb.enable = true;
     gnupg.agent = { enable = true; enableSSHSupport = true; };
   };
 
+  virtualisation = {
+    docker.enable = true;
+    # virtualbox.host = {
+    #   enable = true;
+    #   enableExtensionPack = true;
+    # };
+  };
+
   services = {
-    nixosManual.showManual = true;
+    dbus = {
+      socketActivated = true;
+      packages = with pkgs; [ gnome3.dconf gnome2.GConf ];
+    };
 
-    locate.enable = true;
-    openssh.enable = true;
-    printing.enable = true;
+    localtime.enable = true;
     upower.enable = true;
-    fprintd.enable = true;
+    # fprintd.enable = true;
+    openssh.enable = true;
 
-    dbus.packages = [ pkgs.gnome3.dconf ];
+    postgresql.enable = true;
+
+    printing = {
+      enable = true;
+      drivers = [ pkgs.epson-escpr ];
+    };
+
+    avahi = {
+      enable = true;
+      nssmdns = true;
+    };
 
     # logind.lidSwitch = "lock";
 
-    # vsliveshare = {
-    #   enable = true;
-    #   enableWritableWorkaround = true;
-    #   enableDiagnosticsWorkaround = true;
-    #   extensionsDir = "/home/julius/.vscode/extensions";
-    # };
+    redshift = {
+      enable = true;
+      temperature.day = 6500;
+    };
 
-    # Enable the X11 windowing system.
+    vsliveshare = {
+      enable = true;
+      enableWritableWorkaround = true;
+      enableDiagnosticsWorkaround = true;
+      extensionsDir = "/home/julius/.vscode/extensions";
+    };
+
     xserver = {
       enable = true;
       layout = "us,lt";
       xkbOptions = "grp:shifts_toggle,eurosign:e,ctrl:nocaps,compose:rctrl";
 
-      displayManager.lightdm = {
-        enable = true;
-        greeters.gtk = {
-          enable = true;
-          theme = {
-            package = pkgs.plata-theme;
-            name = "Plata-Noir";
-          };
-          iconTheme = {
-            package = pkgs.papirus-icon-theme;
-            name = "Papirus-Dark";
-          };
-          cursorTheme = {
-            package = pkgs.paper-icon-theme;
-            name = "Paper";
-          };
-        };
+      displayManager = {
+        gdm.enable = true;
+        extraSessionFilePackages = [ pkgs.sway ];
       };
 
       desktopManager = {
-        gnome3.enable = true;
         xterm.enable = false;
+        gnome3 = {
+          enable = true;
+          extraGSettingsOverridePackages = with pkgs; [
+            gnome3.gnome-terminal
+          ];
+          extraGSettingsOverrides = ''
+            [org.gnome.desktop.default-applications]
+            terminal="exec kitty" 
+          '';
+        };
       };
 
       windowManager = {
@@ -194,12 +259,21 @@
         default = "xmonad";
       };
 
-      # Enable touchpad support.
       libinput = {
         enable = true;
         naturalScrolling = true;
         disableWhileTyping = true;
+        accelProfile = "flat";
       };
+      config = ''
+        Section "InputClass"
+          Identifier "mouse accel"
+          Driver "libinput"
+          MatchIsPointer "yes"
+          Option "AccelProfile" "flat"
+          Option "AccelSpeed" "0"
+        EndSection
+      '';
 
       multitouch = {
         enable = true;
@@ -212,7 +286,7 @@
       '';
 
       wacom.enable = true;
-      modules = [pkgs.xf86_input_wacom ];
+      modules = [ pkgs.xf86_input_wacom ];
     };
 
     compton = {
@@ -220,22 +294,37 @@
       backend = "glx";
       fade = true;
       fadeDelta = 4;
-      vSync = "opengl";
-      extraOptions = ''
+      vSync = true;
+      settings = {
         paint-on-overlay = true;
         glx-no-stencil = true;
         glx-no-rebind-pixmap = true;
         glx-swap-method = "buffer-age";
         sw-opti = true;
         xrender-sync-fence = true;
-      '';
+      };
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  systemd.services."xsecurelock" = {
+    description = "Lock X session using xsecurelock";
+    wantedBy = [ "suspend.target" ];
+    before = [ "suspend.target" ];
+
+    environment = {
+      DISPLAY = ":0";
+      XAUTHORITY = "/home/julius/.Xauthority";
+    };
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.xsecurelock}/bin/xsecurelock";
+    };
+  };
+
   users.users.julius = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "adbusers" "docker" "vboxusers" "sway" ];
     shell = pkgs.fish;
   };
 
@@ -243,10 +332,10 @@
 
   security = {
     sudo.wheelNeedsPassword = false;
-    pam.services = {
-      login.fprintAuth = true;
-      xscreensaver.fprintAuth = true;
-    };
+    # pam.services = {
+    #   login.fprintAuth = true;
+    #   xscreensaver.fprintAuth = true;
+    # };
   };
 
   system.autoUpgrade.enable = true;
