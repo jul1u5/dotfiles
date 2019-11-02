@@ -1,0 +1,19 @@
+name: taffybar-config
+author: Julius Marozas
+github: jul1u5/dotfiles
+copyright: Copyright (c) 2019 Julius Marozas
+maintainer: marozas.julius@gmail.com
+library:
+  source-dirs: .
+dependencies:
+  - base >= 4.7 && < 5
+  - taffybar
+executables:
+  taffybar-config:
+    source-dirs: .
+    main: taffybar.hs
+    ghc-options:
+      - -Wall
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N

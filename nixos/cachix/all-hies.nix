@@ -1,4 +1,3 @@
-
 {
   nix = {
     binaryCaches = [
@@ -10,4 +9,3 @@
     trustedUsers = [ "root" "julius" ];
   };
 }
-    

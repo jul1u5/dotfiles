@@ -1,0 +1,44 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 83cd5362107d614c5170cdbc530189d7702816e5545e43fe002e235d454b3f9b
+
+name:           xmonad-config
+version:        0.0.0
+homepage:       https://github.com/jul1u5/dotfiles#readme
+bug-reports:    https://github.com/jul1u5/dotfiles/issues
+author:         Julius Marozas
+maintainer:     marozas.julius@gmail.com
+copyright:      Copyright (c) 2019 Julius Marozas
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/jul1u5/dotfiles
+
+library
+  other-modules:
+      Paths_xmonad_config
+  hs-source-dirs:
+      ./.
+  build-depends:
+      base >=4.7 && <5
+    , xmonad
+    , xmonad-contrib
+  default-language: Haskell2010
+
+executable xmonad-config
+  main-is: xmonad.hs
+  other-modules:
+      Paths_xmonad_config
+  hs-source-dirs:
+      ./.
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , xmonad
+    , xmonad-contrib
+  default-language: Haskell2010
