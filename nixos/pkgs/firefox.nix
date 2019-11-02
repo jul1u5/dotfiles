@@ -3,7 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     firefox
-    shadowfox
   ];
 
   environment.variables = {
