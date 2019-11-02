@@ -13,7 +13,7 @@
  '(org-refile-use-outline-path (quote file))
  '(package-selected-packages
    (quote
-    (elpy hindent fsharp-mode ag qml-mode racket-mode php-mode go-mode kotlin-mode nginx-mode toml-mode love-minor-mode dockerfile-mode nix-mode purescript-mode markdown-mode jinja2-mode nim-mode csharp-mode rust-mode cmake-mode clojure-mode graphviz-dot-mode lua-mode tuareg glsl-mode yaml-mode d-mode scala-mode nasm-mode editorconfig tide company powershell org-cliplink js2-mode yasnippet helm-ls-git helm-git-grep helm-cmd-t helm openwith paredit dash-functional smex rainbow-mode multiple-cursors move-text magit ido-completing-read+ haskell-mode gruber-darker-theme csgo-conf-mode amx)))
+    (emojify elpy hindent fsharp-mode ag qml-mode racket-mode php-mode go-mode kotlin-mode nginx-mode toml-mode love-minor-mode dockerfile-mode nix-mode purescript-mode markdown-mode jinja2-mode nim-mode csharp-mode rust-mode cmake-mode clojure-mode graphviz-dot-mode lua-mode tuareg glsl-mode yaml-mode d-mode scala-mode nasm-mode editorconfig tide company powershell org-cliplink js2-mode yasnippet helm-ls-git helm-git-grep helm-cmd-t helm openwith paredit dash-functional smex rainbow-mode multiple-cursors move-text magit ido-completing-read+ haskell-mode gruber-darker-theme csgo-conf-mode amx)))
  '(whitespace-style
    (quote
     (face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))))
