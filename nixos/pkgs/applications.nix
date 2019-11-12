@@ -15,7 +15,7 @@
     lutris
     lxappearance
     mpv
-    nautilus
+    gnome3.nautilus
     pavucontrol
     psensor
     radare2

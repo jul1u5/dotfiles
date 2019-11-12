@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
   fonts = {
@@ -20,7 +20,7 @@
     fontconfig = {
       defaultFonts = {
         sansSerif = [ "Overpass" "Noto Color Emoji" ];
-        monospace = [ "Fira Code" "Fira Code Symbol" "Noto Sans Mono CJK SC"];
+        monospace = [ "Fira Code" "Fira Code Symbol" "Noto Sans Mono CJK SC" ];
       };
     };
   };

@@ -1,13 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware
-    ./modules
-    ./pkgs
-    ./services
-    ./cachix.nix
-  ];
+  imports = [ ./hardware ./modules ./pkgs ./services ./cachix.nix ];
 
   sound.enable = true;
 
@@ -16,14 +10,13 @@
     defaultLocale = "en_US.UTF-8";
   };
 
-  location = {
-    provider = "geoclue2";
-  };
+  location = { provider = "geoclue2"; };
 
   # GTK icon theme
   # environment.profileRelativeEnvVars.XCURSOR_PATH = [ "/share/icons" ];
   environment.sessionVariables = {
-    GDK_PIXBUF_MODULE_FILE = "$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)";
+    GDK_PIXBUF_MODULE_FILE =
+      "$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)";
     GTK_DATA_PREFIX = [ "${config.system.path}" ];
     # GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
   };
@@ -33,7 +26,10 @@
     vim.defaultEditor = true;
     fish.enable = true;
     mtr.enable = true;
-    gnupg.agent = { enable = true; enableSSHSupport = true; };
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
   };
 
   nix.allowedUsers = [ "root" "@wheel" ];

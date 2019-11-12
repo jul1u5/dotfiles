@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    firefox
-  ];
+  environment.systemPackages = with pkgs; [ firefox ];
 
   environment.variables = {
     # Touch screen in firefox

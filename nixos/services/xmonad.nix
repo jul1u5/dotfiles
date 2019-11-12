@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    taffybar
-  ];
+  environment.systemPackages = with pkgs; [ taffybar ];
 
   services = {
     dbus = {

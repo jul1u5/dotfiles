@@ -11,16 +11,7 @@
     gnomeExtensions.impatience
   ];
 
-  services.xserver.desktopManager = {
-    gnome3 = {
-      enable = true;
-      extraGSettingsOverridePackages = with pkgs; [
-        gnome3.gnome-terminal
-      ];
-      extraGSettingsOverrides = ''
-        [org.gnome.desktop.default-applications]
-        terminal="exec kitty"
-      '';
-    };
-  };
+  services.xserver.desktopManager = { gnome3 = { enable = true; }; };
+
+  nixpkgs.overlays = [ (self: super: { gnome-terminal = super.kitty; }) ];
 }

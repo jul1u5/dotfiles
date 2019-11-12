@@ -1,6 +1,7 @@
 {
   imports = [
     ./vscode
+    ./applications.nix
     ./android.nix
     ./core.nix
     ./direnv.nix
@@ -10,9 +11,7 @@
     ./theme.nix
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config = { allowUnfree = true; };
 
   environment.variables = {
     BROWSER = "firefox";

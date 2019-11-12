@@ -3,7 +3,7 @@
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    plymouth.enable = true;
+    # plymouth.enable = true;
     loader = {
       # Use the systemd-boot EFI boot loader.
       systemd-boot = {

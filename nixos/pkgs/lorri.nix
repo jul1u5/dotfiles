@@ -2,10 +2,9 @@
 
 let
   lorri = (import (fetchTarball {
-    url = https://github.com/target/lorri/archive/rolling-release.tar.gz;
-  }) {});
-in
-{
+    url = "https://github.com/target/lorri/archive/rolling-release.tar.gz";
+  }) { });
+in {
   systemd.user.sockets.lorri = {
     description = "lorri build daemon";
     listenStreams = [ "%t/lorri/daemon.socket" ];

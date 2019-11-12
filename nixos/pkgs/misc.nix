@@ -19,6 +19,7 @@
     imwheel
     jq
     killall
+    lf
     libqalculate
     lolcat
     lshw
@@ -31,7 +32,6 @@
     openvpn
     pciutils
     playerctl
-    ranger
     ripgrep
     rofi
     scrot
