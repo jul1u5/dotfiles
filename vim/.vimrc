@@ -11,6 +11,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'cespare/vim-toml'
 Plug 'LnL7/vim-nix'
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'dag/vim-fish'
 
 call plug#end()
 
