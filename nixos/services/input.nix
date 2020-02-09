@@ -18,12 +18,6 @@
       EndSection
     '';
 
-    multitouch = {
-      enable = true;
-      invertScroll = true;
-      ignorePalm = true;
-    };
-
     wacom.enable = true;
     modules = [ pkgs.xf86_input_wacom ];
   };
