@@ -9,6 +9,7 @@
     ./lorri.nix
     ./misc.nix
     ./theme.nix
+    ./zsh.nix
   ];
 
   nixpkgs.config = { allowUnfree = true; };
