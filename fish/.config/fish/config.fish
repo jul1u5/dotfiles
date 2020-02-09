@@ -1,6 +1,11 @@
-# direnv hook
-direnv hook fish | source
+if type -q direnv
+  direnv hook fish | source
+end
 
-# opam configuration
-source /home/julius/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-eval (starship init fish)
+if type -q any-nix-shell
+  any-nix-shell fish --info-right | source
+end
+
+if type -q starship
+  eval (starship init fish)
+end
