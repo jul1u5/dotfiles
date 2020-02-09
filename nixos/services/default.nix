@@ -2,7 +2,7 @@
   imports = [
     ./compton.nix
     ./gdm.nix
-    ./gnome.nix
+    ./gnome
     ./input.nix
     ./keyboard.nix
     ./printing.nix
@@ -25,7 +25,7 @@
     xserver = {
       enable = true;
 
-      desktopManager.xterm.enable = false;
+      desktopManager = { xterm.enable = false; };
 
       screenSection = ''
         Option "RandRRotation" "on"
