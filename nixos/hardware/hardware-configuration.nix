@@ -24,6 +24,7 @@
   fileSystems."/mnt/windows" = {
     device = "/dev/disk/by-uuid/227672AC76728079";
     fsType = "ntfs";
+    options = [ "uid=1000" ];
   };
 
   swapDevices =
