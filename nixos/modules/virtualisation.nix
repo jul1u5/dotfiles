@@ -1,9 +1,10 @@
+{ pkgs, ... }:
+
 {
   virtualisation = {
     docker.enable = true;
-    # virtualbox.host = {
-    #   enable = true;
-    #   enableExtensionPack = true;
-    # };
+    libvirtd.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [ docker-compose ];
 }
