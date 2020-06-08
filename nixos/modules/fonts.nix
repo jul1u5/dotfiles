@@ -4,23 +4,20 @@
   fonts = {
     fonts = with pkgs; [
       corefonts
+      dejavu_fonts
       fira-code
-      fira-code-symbols
-      font-awesome-ttf
-      freefont_ttf
-      google-fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
+      helvetica-neue-lt-std
+      jetbrains-mono
+      joypixels
+      symbola
+      manrope
       overpass
     ];
 
-    enableDefaultFonts = true;
-
     fontconfig = {
       defaultFonts = {
-        sansSerif = [ "Overpass" "Noto Color Emoji" ];
-        monospace = [ "Fira Code" "Fira Code Symbol" "Noto Sans Mono CJK SC" ];
+        sansSerif = [ "Overpass" "JoyPixels" ];
+        monospace = [ "Fira Code" "Symbola" ];
       };
     };
   };
