@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware ./modules ./pkgs ./services ./cachix.nix ];
+  imports = [ ./hardware-configuration.nix ./modules ./pkgs ./services ];
 
   sound.enable = true;
 
