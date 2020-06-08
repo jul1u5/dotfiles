@@ -27,6 +27,7 @@
     mpv
     mplayer
     ncdu
+    neovim
     octave
     pandoc
     pavucontrol
