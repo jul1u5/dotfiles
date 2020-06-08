@@ -1,11 +1,14 @@
 {
   imports = [
-    ./compton.nix
+    # ./compton.nix
     ./gdm.nix
     ./gnome.nix
     ./input.nix
     ./keyboard.nix
+    ./lorri.nix
+    ./postgresql.nix
     ./printing.nix
+    ./redshift.nix
     ./sway.nix
     ./xmonad.nix
   ];
@@ -13,17 +16,10 @@
   services = {
     localtime.enable = true;
     upower.enable = true;
-    # openssh.enable = true;
-
-    postgresql.enable = true;
-
-    redshift = {
-      enable = true;
-      temperature.day = 6500;
-    };
 
     xserver = {
       enable = true;
+      videoDrivers = [ "intel" ];
 
       desktopManager = { xterm.enable = false; };
 
