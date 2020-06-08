@@ -2,7 +2,7 @@
   imports = [
     ./compton.nix
     ./gdm.nix
-    ./gnome
+    ./gnome.nix
     ./input.nix
     ./keyboard.nix
     ./printing.nix
