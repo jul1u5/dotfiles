@@ -3,28 +3,18 @@
 {
   imports = [ ./hardware-configuration.nix ./modules ./pkgs ./services ];
 
+  networking.hostName = "spin";
+
+  console.keyMap = "us";
+  i18n.defaultLocale = "en_US.UTF-8";
+
   sound.enable = true;
-
-  i18n = {
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-  };
-
   location = { provider = "geoclue2"; };
-
-  # GTK icon theme
-  # environment.profileRelativeEnvVars.XCURSOR_PATH = [ "/share/icons" ];
-  environment.sessionVariables = {
-    GDK_PIXBUF_MODULE_FILE =
-      "$(echo ${pkgs.librsvg.out}/lib/gdk-pixbuf-2.0/*/loaders.cache)";
-    GTK_DATA_PREFIX = [ "${config.system.path}" ];
-    # GTK_PATH = "${config.system.path}/lib/gtk-3.0:${config.system.path}/lib/gtk-2.0";
-  };
 
   programs = {
     light.enable = true;
-    vim.defaultEditor = true;
     fish.enable = true;
+    vim.defaultEditor = true;
     mtr.enable = true;
     gnupg.agent = {
       enable = true;
@@ -32,14 +22,18 @@
     };
   };
 
-  nix.allowedUsers = [ "root" "@wheel" ];
+  nix = {
+    trustedUsers = [ "root" "julius" ];
+    allowedUsers = [ "root" "@wheel" ];
+
+    binaryCaches = [ " https://nixcache.reflex-frp.org" ];
+    binaryCachePublicKeys =
+      [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+  };
 
   security = {
     sudo.wheelNeedsPassword = false;
-    # pam.services = {
-    #   login.fprintAuth = true;
-    #   xscreensaver.fprintAuth = true;
-    # };
+    pam.services = { gdm.enableGnomeKeyring = true; };
   };
 
   system.autoUpgrade.enable = true;
