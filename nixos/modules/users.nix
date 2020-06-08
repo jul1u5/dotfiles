@@ -1,10 +1,21 @@
 { pkgs, ... }:
 
 {
-  users.users.julius = {
-    isNormalUser = true;
-    extraGroups =
-      [ "wheel" "networkmanager" "adbusers" "docker" "vboxusers" "sway" ];
-    shell = pkgs.fish;
+  users = {
+    users.julius = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+
+      extraGroups = [
+        "adbusers"
+        "docker"
+        "input"
+        "networkmanager"
+        "sway"
+        "video"
+        "wheel"
+        "wireshark"
+      ];
+    };
   };
 }
