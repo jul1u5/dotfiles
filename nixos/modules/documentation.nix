@@ -1,0 +1,3 @@
+{
+  documentation.dev.enable = true;
+}
