@@ -5,19 +5,22 @@
     fonts = with pkgs; [
       corefonts
       dejavu_fonts
-      fira-code
       helvetica-neue-lt-std
       jetbrains-mono
       joypixels
-      symbola
       manrope
+      (nerdfonts.override {
+        fonts = [ "FiraCode" ];
+      })
       overpass
+      symbola
     ];
 
     fontconfig = {
       defaultFonts = {
         sansSerif = [ "Overpass" "JoyPixels" ];
-        monospace = [ "Fira Code" "Symbola" ];
+        monospace = [ "FiraCode Nerd Font" ];
+        emoji = [ "JoyPixels" ];
       };
     };
   };
