@@ -1,1 +1,0 @@
-{ services.postgresql.enable = true; }
