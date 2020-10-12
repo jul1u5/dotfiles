@@ -51,3 +51,12 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+(use-package lsp-haskell
+  :ensure t
+  :custom
+  (lsp-haskell-formatting-provider "stylish-haskell"))
+;; :config
+;; (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"))
+;; Comment/uncomment this line to see interactions between lsp client/server.
+;;(setq lsp-log-io t)

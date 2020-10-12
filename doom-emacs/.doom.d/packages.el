@@ -52,3 +52,5 @@
 
 ;;(package! flycheck-grammarly :recipe (:host github :repo "jcs-elpa/flycheck-grammarly"))
 ;;(use-package! flycheck-grammarly)
+
+(unpin! lsp-haskell)
