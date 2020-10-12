@@ -1,3 +1,4 @@
+export PATH="$HOME/.npm-global/bin:$PATH"
 export ZSH=~/.oh-my-zsh
 
 if [ ! -d $ZSH ]; then
@@ -36,6 +37,7 @@ CASE_SENSITIVE=true
 DISABLE_CORRECTION=true
 
 ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOCONNECT=false
 
 setopt HIST_IGNORE_ALL_DUPS
 
@@ -78,4 +80,8 @@ if [ -n "${commands[fzf-share]}" ]; then
   source "$(fzf-share)/completion.zsh"
 fi
 
+export WORDCHARS=""
+
 eval "$(starship init zsh)"
+
+eval "$(direnv hook zsh)"
