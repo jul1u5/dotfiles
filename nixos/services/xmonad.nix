@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ taffybar ];
+  # environment.systemPackages = with pkgs; [ taffybar ];
 
   services = {
     dbus = {
@@ -21,6 +21,10 @@
           ];
         };
       };
+
+      displayManager.sessionCommands = with pkgs.xlibs; ''
+        ${xsetroot} -cursor_name left_ptr
+      '';
     };
   };
 }
