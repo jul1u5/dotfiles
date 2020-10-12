@@ -14,10 +14,10 @@
     gnomeExtensions.impatience
   ];
 
-  services = {
-    xserver.desktopManager = { gnome3.enable = true; };
+  programs.gpaste.enable = true;
 
-    udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  services = {
+    xserver.desktopManager.gnome3.enable = true;
 
     gnome3.sushi.enable = true;
   };
