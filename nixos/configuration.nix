@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ./modules ./pkgs ./services ];
+  imports = [ ./cachix.nix ./hardware-configuration.nix ./modules ./pkgs ./services ];
 
   networking.hostName = "spin";
 
@@ -25,10 +25,6 @@
   nix = {
     trustedUsers = [ "root" "julius" ];
     allowedUsers = [ "root" "@wheel" ];
-
-    binaryCaches = [ " https://nixcache.reflex-frp.org" ];
-    binaryCachePublicKeys =
-      [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   };
 
   security = {
