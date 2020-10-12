@@ -1,13 +1,14 @@
 {
   imports = [
-    ./vscode
-    ./applications.nix
     ./android.nix
-    ./core.nix
+    ./applications.nix
+    ./cli.nix
     ./direnv.nix
+    ./emacs.nix
     ./firefox.nix
-    ./misc.nix
+    ./steam.nix
     ./theme.nix
+    ./vscode
     ./zsh.nix
   ];
 

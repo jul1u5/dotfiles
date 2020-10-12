@@ -7,43 +7,39 @@
     alacritty
     blender
     discord
+    #   url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
+    # (import (fetchTarball {
+    # }) { config = { allowUnfree = true; }; }).discord
     dmenu
-    emacs
     feh
+    flameshot
     gimp
-    gitAndTools.hub
     gnome3.nautilus
     google-chrome
     gparted
-    httpie
+    gthumb
     inkscape
     kitty
     krita
-    libqalculate
     libreoffice
-    # lutris
+    lutris
     lxappearance
-    lynx
     mpv
-    ncdu
-    neovim
     octave
-    pandoc
     pavucontrol
+    pick-colour-picker
     postman
-    psensor
-    radare2
+    pulseeffects
+    remmina
     rofi
     scrot
+    signal-desktop
     spotify
-    starship
-    steam
-    thefuck
-    tmux
-    translate-shell
+    teams
     transmission-gtk
-    vimHugeX
+    virt-manager
     wireshark
-    ytop
+    zoom-us
+    zotero
   ];
 }
