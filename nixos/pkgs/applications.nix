@@ -25,7 +25,6 @@
     lxappearance
     lynx
     mpv
-    mplayer
     ncdu
     neovim
     octave
