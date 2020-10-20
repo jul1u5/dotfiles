@@ -14,10 +14,14 @@
 
   nixpkgs.config = { allowUnfree = true; };
 
-  environment.variables = {
-    BROWSER = "firefox";
+  environment = {
+    defaultPackages = [];
 
-    # rofi
-    TERMINAL = "alacritty";
+    variables = {
+      BROWSER = "firefox";
+
+      # rofi
+      TERMINAL = "alacritty";
+    };
   };
 }

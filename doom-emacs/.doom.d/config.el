@@ -60,3 +60,5 @@
 ;; (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"))
 ;; Comment/uncomment this line to see interactions between lsp client/server.
 ;;(setq lsp-log-io t)
+
+(setq display-line-numbers-type 'relative)

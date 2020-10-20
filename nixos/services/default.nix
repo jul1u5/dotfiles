@@ -19,13 +19,20 @@
 
     xserver = {
       enable = true;
-      videoDrivers = [ "intel" ];
 
-      desktopManager.xterm.enable = false;
+      videoDrivers = [ "modesetting" ];
+      useGlamor = true;
+
+      # deviceSection = ''
+      #   Option "DRI" "2"
+      #   Option "TearFree" "true"
+      # '';
 
       screenSection = ''
         Option "RandRRotation" "on"
       '';
+
+      desktopManager.xterm.enable = true;
     };
   };
 }

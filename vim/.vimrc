@@ -90,6 +90,7 @@ let g:rainbow_active = 1
 
 nnoremap <C-p> :<C-u>FZF<CR>
 nmap <leader>= gg=G``
+vnoremap <leader>p "_dP
 
 if executable('rg')
     let g:rg_derive_root = 'true'
@@ -134,6 +135,6 @@ cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 
 cnoremap <C-d> <Del>
-cnoremap d <S-Right>
-cnoremap b <S-Left>
-cnoremap f <S-Right>
+cnoremap <M-d> <S-Del>
+cnoremap <M-f> <S-Right>
+cnoremap <M-b> <S-Left>

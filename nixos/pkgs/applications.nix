@@ -7,8 +7,8 @@
     alacritty
     blender
     discord
-    #   url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
     # (import (fetchTarball {
+    #   url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
     # }) { config = { allowUnfree = true; }; }).discord
     dmenu
     feh

@@ -9,6 +9,7 @@
     bc
     binutils
     cmatrix
+    colordiff
     cowsay
     dragon-drop
     exa
@@ -22,6 +23,7 @@
     gitAndTools.gh
     glxinfo
     gnupg
+    gnutls
     googler
     graphviz
     htop
@@ -38,6 +40,7 @@
     lshw
     lsof
     lynx
+    manix
     moreutils
     ncdu
     neofetch
@@ -53,6 +56,7 @@
     openvpn
     openvpn
     pandoc
+    pass
     patchelf
     pciutils
     playerctl
@@ -77,13 +81,14 @@
     unzip
     usbutils
     vimHugeX
+    weechat
     wget
     xbrightness
     xclip
     xorg.xev
     xorg.xeyes
     youtube-dl
-    ytop
+    bottom
     zip
   ];
 }
