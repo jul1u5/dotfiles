@@ -50,7 +50,6 @@ map <leader><C-o> :NERDTreeToggle<CR>
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
-Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
@@ -67,6 +66,7 @@ Plug 'luochen1990/rainbow'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
+Plug 'tommcdo/vim-exchange'
 Plug 'aymericbeaumet/vim-symlink'
 Plug 'mbbill/undotree'
 
