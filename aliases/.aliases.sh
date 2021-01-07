@@ -1,3 +1,4 @@
+alias rm='trash-put'
 alias cat=bat
 
 alias ls='exa --icons --git'
