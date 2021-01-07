@@ -52,13 +52,78 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(use-package lsp-haskell
+(setq display-line-numbers-type 'relative)
+
+(setq doom-themes-treemacs-theme 'doom-colors)
+
+(use-package! nix-mode
+  :init
+  (setq nix-nixfmt-bin "nixpkgs-fmt"))
+
+;; (use-package! magit-delta
+;;   :after magit
+;;   :config
+;;   (setq
+;;     magit-delta-default-dark-theme "OneHalfDark"
+;;     magit-delta-default-light-theme "OneHalfLight")
+;;   (magit-delta-mode))
+
+(use-package! org-super-agenda
+  :init
+  (setq org-super-agenda-groups '((:name "Today"
+                                   :time-grid t
+                                   :scheduled today)
+                                  (:name "Due today"
+                                   :deadline today)
+                                  (:name "Important"
+                                   :priority "A")
+                                  (:name "Overdue"
+                                   :deadline past)
+                                  (:name "Due soon"
+                                   :deadline future)
+                                  (:name "Big outcomes"
+                                   :tag "bo")))
+  :config
+  (org-super-agenda-mode))
+
+(use-package! gnuplot
+  :mode "\\.gp\\'")
+
+(use-package! dhall-mode
+  :mode "\\.dhall\\'")
+
+(set-email-account! "Gmail"
+                    '((mu4e-refile-folder     . "/gmail/gmail/Inbox")
+                      (smtpmail-smtp-user     . "marozas.julius@gmail.com"))
+                    t)
+
+(after! circe
+  (set-irc-server! "chat.freenode.net"
+                   `(:tls t
+                     :port 6697
+                     :nick "jul1u5"
+                     :sasl-username ,(+pass-get-user   "irc/freenode.net")
+                     :sasl-password (lambda (&rest _) (+pass-get-secret "irc/freenode.net"))
+                     :channels ("#emacs" "#nixos"))))
+
+(use-package! lsp-mode
+  :custom
+  (lsp-lens-enable t)
+  (lsp-headerline-breadcrumb-enable nil))
+
+(use-package! lsp-haskell
   :ensure t
   :custom
-  (lsp-haskell-formatting-provider "stylish-haskell"))
-;; :config
-;; (setq lsp-haskell-process-path-hie "haskell-language-server-wrapper"))
-;; Comment/uncomment this line to see interactions between lsp client/server.
-;;(setq lsp-log-io t)
+  (lsp-haskell-formatting-provider "stylish-haskell")
+  :config
+  ;; Comment/uncomment this line to see interactions between lsp client/server.
+  (setq lsp-log-io t))
 
-(setq display-line-numbers-type 'relative)
+(add-hook 'ispell-update-post-hook
+          (lambda ()
+            (with-current-buffer ispell-choices-buffer
+              (centaur-tabs-local-mode))))
+
+;; (use-package! grip-mode
+;;   :custom
+;;   (grip-preview-use-webkit t))
