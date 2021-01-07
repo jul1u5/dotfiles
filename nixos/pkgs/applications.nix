@@ -1,17 +1,16 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 {
   programs = { wireshark.enable = true; };
 
   environment.systemPackages = with pkgs; [
+    unstable.androidStudioPackages.canary
     alacritty
     blender
-    discord
-    # (import (fetchTarball {
-    #   url = "https://github.com/NixOS/nixpkgs/archive/master.tar.gz";
-    # }) { config = { allowUnfree = true; }; }).discord
+    unstable.discord
     dmenu
     feh
+    firefox-bin
     flameshot
     gimp
     gnome3.nautilus
@@ -22,7 +21,7 @@
     kitty
     krita
     libreoffice
-    lutris
+    # lutris
     lxappearance
     mpv
     octave
@@ -34,7 +33,7 @@
     rofi
     scrot
     signal-desktop
-    spotify
+    unstable.spotify
     teams
     transmission-gtk
     virt-manager

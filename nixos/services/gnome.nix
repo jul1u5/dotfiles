@@ -9,7 +9,6 @@
 
   programs.qt5ct.enable = true;
   programs.dconf.enable = true;
-  programs.gpaste.enable = true;
 
   environment.systemPackages = with pkgs; [
     gnome3.gnome-tweaks

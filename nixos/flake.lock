@@ -1,22 +1,89 @@
 {
   "nodes": {
+    "emacs-overlay": {
+      "locked": {
+        "lastModified": 1609100384,
+        "narHash": "sha256-FW3X2At688q7euVieyGnSaT3Ie8QenrZQ5v7IGeP6XA=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "f77fd4e00a20942b348e8781e6aec6890e6d9204",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
+    "fallout-grub-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1599247209,
+        "narHash": "sha256-r8KGj7IJBXIEi+0ewH3Kakg30iJw+kp8QBIBiEas7tk=",
+        "owner": "shvchk",
+        "repo": "fallout-grub-theme",
+        "rev": "211348f7fe7002a144c709dc3eb5d04f4acde4dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shvchk",
+        "repo": "fallout-grub-theme",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1608918390,
+        "narHash": "sha256-Ztx7egQQyF4RtWFKaZiytvZF1Yzk4R2GZ7c5r1/JjPw=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "c242378e63b0ec334e964ac0c0fbbdd2b3e89ebf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1603203815,
-        "narHash": "sha256-MrcwlbIWhhQ0qScsxzwe6rwVpkaQ9Qok30BWrNFGGY4=",
+        "lastModified": 1609580981,
+        "narHash": "sha256-esnPRxHdqKTdOJyEol3zOJ7/atfvNyKFW1IN+ejzhfI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b6b09ac7ae3c3fbe7dd3d45625abe2fd650af025",
+        "rev": "56bb1b0f7a33e5d487dc2bf2e846794f4dcb4d01",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1609580981,
+        "narHash": "sha256-esnPRxHdqKTdOJyEol3zOJ7/atfvNyKFW1IN+ejzhfI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "56bb1b0f7a33e5d487dc2bf2e846794f4dcb4d01",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
         "type": "indirect"
       }
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "emacs-overlay": "emacs-overlay",
+        "fallout-grub-theme": "fallout-grub-theme",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },

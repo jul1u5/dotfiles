@@ -1,13 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     acpi
     appimage-run
+    nodejs
     atool
     bat
     bc
     binutils
+    bitwarden-cli
+    unstable.bottom
+    cachix
     cmatrix
     colordiff
     cowsay
@@ -18,16 +22,18 @@
     file
     fortune
     fzf
-    git
-    git-lfs
+    gitAndTools.delta
     gitAndTools.gh
+    gitAndTools.gitFull
     glxinfo
     gnupg
     gnutls
     googler
     graphviz
+    hexyl
     htop
     httpie
+    hyperfine
     imagemagick
     imwheel
     inotify-tools
@@ -36,11 +42,10 @@
     libinput
     libqalculate
     lolcat
-    lsd
     lshw
     lsof
     lynx
-    manix
+    unstable.manix
     moreutils
     ncdu
     neofetch
@@ -52,9 +57,8 @@
     nixpkgs-fmt
     nmap-graphical
     nnn
-    nodejs
     openvpn
-    openvpn
+    pamixer
     pandoc
     pass
     patchelf
@@ -63,9 +67,11 @@
     psensor
     psmisc
     radare2
+    ranger
     ripgrep
     rlwrap
     shellcheck
+    slurp
     sshfs
     starship
     steam-run
@@ -74,6 +80,7 @@
     thefuck
     tldr
     tmux
+    traceroute
     translate-shell
     trash-cli
     tree
@@ -88,7 +95,6 @@
     xorg.xev
     xorg.xeyes
     youtube-dl
-    bottom
     zip
   ];
 }

@@ -5,10 +5,9 @@
     ./cli.nix
     ./direnv.nix
     ./emacs.nix
-    ./firefox.nix
     ./steam.nix
     ./theme.nix
-    ./vscode
+    ./vscode.nix
     ./zsh.nix
   ];
 
@@ -19,9 +18,6 @@
 
     variables = {
       BROWSER = "firefox";
-
-      # rofi
-      TERMINAL = "alacritty";
     };
   };
 }

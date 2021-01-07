@@ -1,7 +1,12 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, nixpkgs, nixpkgs-unstable, ... }:
 {
-  imports = [ ./cachix.nix ./hardware-configuration.nix ./modules ./pkgs ./services ];
+  imports = [
+    ./cachix.nix
+    ./hardware-configuration.nix
+    ./modules
+    ./pkgs
+    ./services
+  ];
 
   networking.hostName = "spin";
 
@@ -23,13 +28,25 @@
   };
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixFlakes;
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-references
     '';
+
+    nixPath = [
+      "nixpkgs=${nixpkgs}"
+      "nixpkgs-unstable=${nixpkgs-unstable}"
+    ];
+
+    registry = {
+      nixos.flake = nixpkgs;
+      nixpkgs.flake = nixpkgs-unstable;
+    };
 
     trustedUsers = [ "root" "julius" ];
     allowedUsers = [ "root" "@wheel" ];
+
+    gc.automatic = true;
   };
 
   security = {

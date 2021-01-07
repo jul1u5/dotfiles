@@ -6,7 +6,6 @@
 
     users.julius = {
       isNormalUser = true;
-      useDefaultShell = true;
 
       extraGroups = [
         "adbusers"
