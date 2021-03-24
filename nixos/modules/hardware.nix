@@ -7,6 +7,10 @@
   #   vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   # };
 
+  services.logind.extraConfig = ''
+    HandlePowerKey=suspend
+  '';
+
   hardware = {
     enableRedistributableFirmware = true;
 

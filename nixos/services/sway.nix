@@ -1,18 +1,35 @@
-{ lib, config, pkgs, unstable, ... }:
+{ lib, config, pkgs, ... }:
+
 {
   programs.sway = {
     enable = true;
 
+    wrapperFeatures.gtk = true;
+
     extraSessionCommands = ''
+      systemctl --user import-environment
+
+      export XDG_CURRENT_DESKTOP=sway
+
       export MOZ_ENABLE_WAYLAND=1
-      export SDL_VIDEODRIVER=wayland
+      export MOZ_USE_XINPUT2=1
 
       # needs qt5.qtwayland in systemPackages
       export QT_QPA_PLATFORM=wayland
+      export QT_QPA_PLATFORMTHEME=qt5ct
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 
       # Fix for some Java AWT applications (e.g. Android Studio)
       export _JAVA_AWT_WM_NONREPARENTING=1
+
+      XDG_DESKTOP_DIR="$HOME/"
+      XDG_DOWNLOAD_DIR="$HOME/Downloads"
+      XDG_TEMPLATES_DIR="$HOME/Templates"
+      XDG_PUBLICSHARE_DIR="$HOME/Public"
+      XDG_DOCUMENTS_DIR="$HOME/Documents"
+      XDG_MUSIC_DIR="$HOME/Music"
+      XDG_PICTURES_DIR="$HOME/Pictures"
+      XDG_VIDEOS_DIR="$HOME/Videos"
     '';
 
     extraPackages = with pkgs; [
@@ -26,90 +43,50 @@
       gnome3.networkmanagerapplet
       libappindicator
       qt5.qtwayland
-      unstable.wofi
+      wofi
+
       wl-clipboard
+
       slurp
       grim
+      sway-contrib.grimshot
+
+      udiskie
+      nwg-launchers
+      wayvnc
+      wf-recorder
     ];
   };
 
-  # environment = {
-  #   etc = {
-  #     # Put config files in /etc. Note that you also can put these in ~/.config, but then you can't manage them with NixOS anymore!
-  #     "sway/config".source = ./dotfiles/sway/config;
-  #     "xdg/waybar/config".source = ./dotfiles/waybar/config;
-  #     "xdg/waybar/style.css".source = ./dotfiles/waybar/style.css;
-  #   };
-  # };
+  programs.qt5ct.enable = true;
+  programs.waybar.enable = true;
 
-  # Here we put a shell script into path, which lets us start sway.service (after importing the environment of the login shell).
+  xdg.portal = {
+    enable = true;
+    # gtkUsePortal = true;
+    extraPortals = with pkgs; [
+      # xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+  };
+
+  systemd.user.services.xdg-desktop-portal.environment = {
+    XDG_DESKTOP_PORTAL_DIR = config.environment.variables.XDG_DESKTOP_PORTAL_DIR;
+  };
+
+  services.pipewire.enable = true;
+
   environment.systemPackages = with pkgs; [
-    (
-      pkgs.writeTextFile {
-        name = "startsway";
-        destination = "/bin/startsway";
-        executable = true;
-        text = ''
-          #! ${pkgs.bash}/bin/bash
-
-          # first import environment variables from the login manager
-          systemctl --user import-environment
-          # then start the service
-          exec systemctl --user start sway.service
-        '';
-      }
-    )
+    polkit_gnome
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+    libsForQt5.qtstyleplugins
   ];
-
-  systemd.user.targets.sway-session = {
-    description = "Sway compositor session";
-    documentation = [ "man:systemd.special(7)" ];
-    bindsTo = [ "graphical-session.target" ];
-    wants = [ "graphical-session-pre.target" ];
-    after = [ "graphical-session-pre.target" ];
-  };
-
-  systemd.user.services.sway = {
-    description = "Sway - Wayland window manager";
-    documentation = [ "man:sway(5)" ];
-    bindsTo = [ "graphical-session.target" ];
-    wants = [ "graphical-session-pre.target" ];
-    after = [ "graphical-session-pre.target" ];
-    # We explicitly unset PATH here, as we want it to be set by
-    # systemctl --user import-environment in startsway
-    environment = {
-      # PATH = lib.mkForce null;
-    };
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''
-        ${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway --debug
-      '';
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
-    };
-  };
 
   services.redshift = {
     enable = true;
     package = pkgs.redshift-wlr;
-  };
-
-  programs.waybar.enable = true;
-
-  systemd.user.services.kanshi = {
-    description = "Kanshi output autoconfig ";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    serviceConfig = {
-      # kanshi doesn't have an option to specifiy config file yet, so it looks
-      # at .config/kanshi/config
-      ExecStart = ''
-        ${pkgs.kanshi}/bin/kanshi
-      '';
-      RestartSec = 5;
-      Restart = "always";
-    };
+    executable = "/bin/redshift-gtk";
   };
 }

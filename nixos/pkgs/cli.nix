@@ -1,4 +1,4 @@
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -10,7 +10,7 @@
     bc
     binutils
     bitwarden-cli
-    unstable.bottom
+    bottom
     cachix
     cmatrix
     colordiff
@@ -22,9 +22,10 @@
     file
     fortune
     fzf
-    gitAndTools.delta
-    gitAndTools.gh
+    delta
+    gh
     gitAndTools.gitFull
+    gnome3.libsecret
     glxinfo
     gnupg
     gnutls
@@ -40,12 +41,14 @@
     jq
     lf
     libinput
+    libfsm
+    gnome3.librsvg
     libqalculate
     lolcat
     lshw
     lsof
     lynx
-    unstable.manix
+    manix
     moreutils
     ncdu
     neofetch
@@ -72,6 +75,7 @@
     rlwrap
     shellcheck
     slurp
+    socat
     sshfs
     starship
     steam-run

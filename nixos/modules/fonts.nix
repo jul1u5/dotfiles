@@ -8,11 +8,11 @@
       corefonts
       dejavu_fonts
       helvetica-neue-lt-std
-      jetbrains-mono
+      # jetbrains-mono
       joypixels
       manrope
       (nerdfonts.override {
-        fonts = [ "FiraCode" ];
+        fonts = [ "FiraCode" "JetBrainsMono" ];
       })
       fira-code-symbols
       overpass
@@ -22,7 +22,7 @@
     fontconfig = {
       defaultFonts = {
         sansSerif = [ "Overpass" "JoyPixels" ];
-        monospace = [ "FiraCode Nerd Font" "Fira Code Symbol" "DejaVu Serif" ];
+        monospace = [ "JetBrainsMono Nerd Font" "FiraCode Nerd Font" "Fira Code Symbol" "DejaVu Serif" ];
         emoji = [ "JoyPixels" ];
       };
     };

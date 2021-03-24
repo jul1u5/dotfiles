@@ -1,30 +1,50 @@
-{ lib, pkgs, unstable, ... }:
+{ lib, pkgs, ... }:
+
+let emacsPackage = lib.pipe pkgs.emacsPgtkGcc [
+  pkgs.emacsPackagesNgGen
+
+  (e: e.emacsWithPackages (p: with p; [
+    vterm
+    emacsql-sqlite
+    pdf-tools
+  ]))
+];
+in
 {
   nixpkgs.overlays = [
-    (final: prev: {
-      emacs = final.lib.pipe prev.emacs [
-        final.emacsPackagesNgGen
+    (final: prev: with final; {
+      mu = prev.mu.overrideAttrs (_: rec {
+        version = "1.4.15";
 
-        (e: e.emacsWithPackages (p: with p; [
-          vterm
-          emacsql-sqlite
-          pdf-tools
-        ]))
-      ];
+        src = fetchFromGitHub {
+          owner = "djcb";
+          repo = "mu";
+          rev = version;
+          sha256 = "sha256-VIUA0W+AmEbvGWatv4maBGILvUTGhBgO3iQtjIc3vG8=";
+        };
+      });
     })
   ];
+
+  services.emacs = {
+    enable = true;
+    package = emacsPackage;
+  };
 
   fonts.fonts = with pkgs; [ emacs-all-the-icons-fonts ];
 
   environment.systemPackages = with pkgs; [
     # TODO: wrap emacs with its dependencies
-    emacs
+    emacsPackage
+
+    parinfer-rust
 
     # spell
     (aspellWithDicts (d: with d; [
       en
       en-computers
       en-science
+      lt
     ]))
 
     # grammar
@@ -43,5 +63,6 @@
 
     # pdf-tools
     poppler
+    texlive.combined.scheme-basic
   ];
 }

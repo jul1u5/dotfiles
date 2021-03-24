@@ -1,16 +1,20 @@
-{ pkgs, unstable, ... }:
+{ pkgs, modulesPath, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import ../overlays/android-studio.nix { inherit modulesPath; })
+  ];
+
   programs = { wireshark.enable = true; };
 
   environment.systemPackages = with pkgs; [
-    unstable.androidStudioPackages.canary
+    androidStudioPackages.canary
     alacritty
     blender
-    unstable.discord
+    discord
     dmenu
     feh
-    firefox-bin
+    firefox-wayland
     flameshot
     gimp
     gnome3.nautilus
@@ -21,23 +25,24 @@
     kitty
     krita
     libreoffice
-    # lutris
+    lutris
     lxappearance
     mpv
     octave
     pavucontrol
-    pick-colour-picker
     postman
-    pulseeffects
+    pulseeffects-pw
     remmina
     rofi
     scrot
     signal-desktop
-    unstable.spotify
+    slack
+    spotify
     teams
     transmission-gtk
     virt-manager
     wireshark
+    zathura
     zoom-us
     zotero
   ];

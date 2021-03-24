@@ -1,7 +1,17 @@
-{ pkgs, fallout-grub-theme, ... }:
+{ pkgs, ... }:
+let
+  fallout-grub-theme = pkgs.fetchFromGitHub {
+    owner = "shvchk";
+    repo = "fallout-grub-theme";
+    hash = "sha256-r8KGj7IJBXIEi+0ewH3Kakg30iJw+kp8QBIBiEas7tk=";
+    rev = "211348f7fe7002a144c709dc3eb5d04f4acde4dd";
+  };
+in
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
+
+    plymouth.enable = true;
 
     loader = {
       efi.canTouchEfiVariables = true;

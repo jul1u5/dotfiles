@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, nixpkgs-unstable, ... }:
+{ config, pkgs, inputs, ... }:
 {
   imports = [
     ./cachix.nix
@@ -10,17 +10,27 @@
 
   networking.hostName = "spin";
 
-  console.keyMap = "us";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME = "en_IE.UTF-8";
+      LC_MONETARY = "lt_LT.UTF-8";
+      LC_PAPER = "lt_LT.UTF-8";
+      LC_ADDRESS = "lt_LT.UTF-8";
+    };
+  };
 
   sound.enable = true;
-  location = { provider = "geoclue2"; };
+  location.provider = "geoclue2";
 
   programs = {
     light.enable = true;
     fish.enable = true;
-    vim.defaultEditor = true;
     mtr.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -34,13 +44,12 @@
     '';
 
     nixPath = [
-      "nixpkgs=${nixpkgs}"
-      "nixpkgs-unstable=${nixpkgs-unstable}"
+      "nixpkgs=${inputs.nixpkgs}"
+      "nixos-config=/etc/nixos"
     ];
 
     registry = {
-      nixos.flake = nixpkgs;
-      nixpkgs.flake = nixpkgs-unstable;
+      nixpkgs.flake = inputs.nixpkgs;
     };
 
     trustedUsers = [ "root" "julius" ];
@@ -49,10 +58,7 @@
     gc.automatic = true;
   };
 
-  security = {
-    sudo.wheelNeedsPassword = false;
-    pam.services = { gdm.enableGnomeKeyring = true; };
-  };
+  security.sudo.wheelNeedsPassword = false;
 
   system.autoUpgrade.enable = true;
 

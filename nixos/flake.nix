@@ -1,51 +1,41 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/1f77a4c8c74bbe896053994836790aa9bf6dc5ba";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.url = "github:nix-community/emacs-overlay/dcb4f8e97b3a6f215e8a30bc01028fc67a4015e7";
 
-    fallout-grub-theme = {
-      url = "github:shvchk/fallout-grub-theme";
-      flake = false;
-    };
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, emacs-overlay, fallout-grub-theme }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let
       inherit (nixpkgs) lib;
 
       system = "x86_64-linux";
 
-      mkPkgs = pkgs: import pkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      # pkgs = mkPkgs nixpkgs;
-      unstable = import nixpkgs-unstable {
-        inherit system;
-        overlays = [ emacs-overlay.overlay ];
-        config.allowUnfree = true;
-      };
-
       hardwareModules = lib.attrValues {
-        inherit (nixos-hardware.nixosModules)
+        inherit (inputs.nixos-hardware.nixosModules)
           common-cpu-intel
           common-pc-laptop
           common-pc-laptop-ssd
           ;
       };
+
+      overlayModule = { ... }: {
+        nixpkgs.overlays = [
+          inputs.emacs-overlay.overlay
+        ];
+      };
     in
     {
-      nixosConfigurations.spin = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.spin = lib.nixosSystem {
         inherit system;
-        modules = hardwareModules ++ [ (import ./.) ];
-        extraArgs = {
-          inherit nixpkgs nixpkgs-unstable unstable fallout-grub-theme;
+        # pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+        modules = hardwareModules ++ [ overlayModule (import ./.) ];
+        specialArgs = {
+          inherit inputs;
         };
       };
     };
