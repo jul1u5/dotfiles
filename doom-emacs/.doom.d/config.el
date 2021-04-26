@@ -19,12 +19,14 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 14)
+      doom-big-font (font-spec :family "monospace" :size 18))
+;doom-variable-pitch-font (font-spec :family "Overpass" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-vibrant)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -32,8 +34,17 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
+(setq uniquify-buffer-name-style 'forward)
+
+(setq projectile-project-search-path '("~/code"))
+
+;; Switch to the new window after splitting
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
+
+(setq company-idle-delay 0.2)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -52,50 +63,16 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq display-line-numbers-type 'relative)
+(set-file-template! "/shell\\.nix$" ':trigger "__shell.nix" :mode 'nix-mode)
+(set-file-template! "/flake\\.nix$" ':trigger "__flake.nix" :mode 'nix-mode)
 
-(setq doom-themes-treemacs-theme 'doom-colors)
+(add-to-list 'load-path "/run/current-system/sw/share/emacs/site-lisp/mu4e")
 
-(use-package! nix-mode
-  :init
-  (setq nix-nixfmt-bin "nixpkgs-fmt"))
-
-;; (use-package! magit-delta
-;;   :after magit
-;;   :config
-;;   (setq
-;;     magit-delta-default-dark-theme "OneHalfDark"
-;;     magit-delta-default-light-theme "OneHalfLight")
-;;   (magit-delta-mode))
-
-(use-package! org-super-agenda
-  :init
-  (setq org-super-agenda-groups '((:name "Today"
-                                   :time-grid t
-                                   :scheduled today)
-                                  (:name "Due today"
-                                   :deadline today)
-                                  (:name "Important"
-                                   :priority "A")
-                                  (:name "Overdue"
-                                   :deadline past)
-                                  (:name "Due soon"
-                                   :deadline future)
-                                  (:name "Big outcomes"
-                                   :tag "bo")))
-  :config
-  (org-super-agenda-mode))
-
-(use-package! gnuplot
-  :mode "\\.gp\\'")
-
-(use-package! dhall-mode
-  :mode "\\.dhall\\'")
-
-(set-email-account! "Gmail"
-                    '((mu4e-refile-folder     . "/gmail/gmail/Inbox")
-                      (smtpmail-smtp-user     . "marozas.julius@gmail.com"))
-                    t)
+(after! mu4e
+  (set-email-account! "Gmail"
+                      '((mu4e-refile-folder     . "/gmail/gmail/Inbox")
+                        (smtpmail-smtp-user     . user-mail-address)
+                        t)))
 
 (after! circe
   (set-irc-server! "chat.freenode.net"
@@ -104,26 +81,53 @@
                      :nick "jul1u5"
                      :sasl-username ,(+pass-get-user   "irc/freenode.net")
                      :sasl-password (lambda (&rest _) (+pass-get-secret "irc/freenode.net"))
-                     :channels ("#emacs" "#nixos"))))
+                     :channels ("#emacs" "#haskell" "#nixos" "#nix-community"))))
 
-(use-package! lsp-mode
-  :custom
-  (lsp-lens-enable t)
-  (lsp-headerline-breadcrumb-enable nil))
+(after! ispell
+  ;; Also make sure dictionary file is configured
+  ;; in ~/.emacs.d/.local/etc/ispell/en.pws
+  ;; Source: https://github.com/hlissner/doom-emacs/issues/4138#issuecomment-725187904
+  (setq ispell-dictionary "en"))
 
-(use-package! lsp-haskell
-  :ensure t
-  :custom
-  (lsp-haskell-formatting-provider "stylish-haskell")
-  :config
-  ;; Comment/uncomment this line to see interactions between lsp client/server.
-  (setq lsp-log-io t))
+(after! centaur-tabs
+  (add-hook 'proof-goals-mode-hook #'centaur-tabs-local-mode)
+  (add-hook 'proof-response-mode-hook #'centaur-tabs-local-mode)
+  (add-hook 'special-mode-hook #'centaur-tabs-local-mode)
+  (add-hook 'ispell-update-post-hook
+            (lambda () (with-current-buffer ispell-choices-buffer
+                         (centaur-tabs-local-mode)))))
 
-(add-hook 'ispell-update-post-hook
-          (lambda ()
-            (with-current-buffer ispell-choices-buffer
-              (centaur-tabs-local-mode))))
+(setq doom-themes-treemacs-theme 'doom-colors
+      lsp-treemacs-sync-mode 1)
 
-;; (use-package! grip-mode
-;;   :custom
-;;   (grip-preview-use-webkit t))
+(after! lsp-treemacs
+  (load-library "doom-themes-ext-treemacs"))
+
+(after! org
+  (setq org-log-done 'time
+        org-log-into-drawer t
+        org-agenda-start-with-log-mode t
+        org-agenda-start-on-weekday 1)
+  (add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+  (set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.40 :select t :ttl nil))
+
+(after! calendar
+  (setq calendar-week-start-day 1))
+
+(after! nix-mode
+  (setq nix-nixfmt-bin "nixpkgs-fmt"))
+
+(after! lsp-mode
+  (setq lsp-lens-enable t)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-rust-analyzer-import-merge-behaviour "last"))
+  ;; (setq lsp-rust-racer-completion nil))
+
+(after! lsp-haskell
+  (setq lsp-log-io t)
+  (setq lsp-haskell-formatting-provider "fourmolu"))
+  ;; (add-to-list 'haskell-process-args-cabal-repl "-b pretty-simple"))
+
+(after! lsp-julia
+  (setq lsp-julia-package-dir nil)
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.5"))

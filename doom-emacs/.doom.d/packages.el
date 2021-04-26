@@ -27,11 +27,7 @@
 (package! doom-snippets :ignore t)
 (package! yasnippet-snippets)
 
-(package! magit-delta)
-(package! org-super-agenda)
-(package! gnuplot)
 (package! nixpkgs-fmt)
-(package! dhall-mode)
 
 ;; To install a package directly from a particular repo, you'll need to specify
 ;; a `:recipe'. You'll find documentation on what `:recipe' accepts here:
