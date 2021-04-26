@@ -1,40 +1,19 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
+
 {
-  imports = [
-    ./cachix.nix
-    ./hardware-configuration.nix
-    ./modules
-    ./pkgs
-    ./services
-  ];
-
-  networking.hostName = "spin";
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_TIME = "en_IE.UTF-8";
-      LC_MONETARY = "lt_LT.UTF-8";
-      LC_PAPER = "lt_LT.UTF-8";
-      LC_ADDRESS = "lt_LT.UTF-8";
-    };
-  };
+  imports = [ ./cachix.nix ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
 
   sound.enable = true;
-  location.provider = "geoclue2";
 
   programs = {
-    light.enable = true;
-    fish.enable = true;
-    mtr.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
     };
+  };
+
+  environment.variables = {
+    NIXPKGS_ALLOW_UNFREE = "1";
   };
 
   nix = {
@@ -45,20 +24,17 @@
 
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
-      "nixos-config=/etc/nixos"
+      "nixos-config=${inputs.self}/compat/nixos"
     ];
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
     };
 
-    trustedUsers = [ "root" "julius" ];
-    allowedUsers = [ "root" "@wheel" ];
-
     gc.automatic = true;
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  fileSystems."/".device = lib.mkDefault "/dev/disk/by-label/nixos";
 
   system.autoUpgrade.enable = true;
 

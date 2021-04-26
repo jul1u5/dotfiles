@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
-let emacsPackage = lib.pipe pkgs.emacsPgtkGcc [
-  pkgs.emacsPackagesNgGen
+let emacsPackage = lib.pipe pkgs.emacs-pkgs.emacsPgtkGcc [
+  pkgs.emacs-pkgs.emacsPackagesNgGen
 
   (e: e.emacsWithPackages (p: with p; [
     vterm

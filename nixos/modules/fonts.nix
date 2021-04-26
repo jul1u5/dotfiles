@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.config.joypixels.acceptLicense = true;
+  # nixpkgs.config.joypixels.acceptLicense = true;
 
   fonts = {
     fonts = with pkgs; [

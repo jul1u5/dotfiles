@@ -7,7 +7,6 @@
     gnome3.sushi.enable = true;
   };
 
-  programs.qt5ct.enable = true;
   programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [

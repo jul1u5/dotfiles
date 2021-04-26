@@ -1,20 +1,18 @@
 { pkgs, modulesPath, ... }:
 
 {
-  nixpkgs.overlays = [
-    (import ../overlays/android-studio.nix { inherit modulesPath; })
-  ];
-
   programs = { wireshark.enable = true; };
 
   environment.systemPackages = with pkgs; [
     androidStudioPackages.canary
     alacritty
     blender
-    discord
+    unstable.discord
     dmenu
     feh
-    firefox-wayland
+    (firefox-wayland.override {
+      cfg.enableTridactylNative = true;
+    })
     flameshot
     gimp
     gnome3.nautilus
@@ -25,7 +23,9 @@
     kitty
     krita
     libreoffice
-    lutris
+    unstable.lutris
+    legendary-gl
+    wineWowPackages.stable
     lxappearance
     mpv
     octave

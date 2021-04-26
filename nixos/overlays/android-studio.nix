@@ -1,15 +1,16 @@
-{ modulesPath, ... }:
+{ inputs, ... }:
 final: prev:
 
 with final;
 let
   mkStudio = opts:
-    callPackage (import "${modulesPath}/../../pkgs/applications/editors/android-studio/common.nix" opts) {
+    callPackage (import "${inputs.nixpkgs}/pkgs/applications/editors/android-studio/common.nix" opts) {
       fontsConf = makeFontsConf { fontDirectories = [ ]; };
       inherit (gnome2) GConf gnome_vfs;
       inherit buildFHSUserEnv;
     };
-in {
+in
+{
   androidStudioPackages = prev.androidStudioPackages // {
     canary = mkStudio {
       channel = "canary";
