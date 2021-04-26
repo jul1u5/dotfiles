@@ -1,8 +1,7 @@
 { lib, pkgs, ... }:
 
-let emacsPackage = lib.pipe pkgs.emacs-pkgs.emacsPgtkGcc [
-  pkgs.emacs-pkgs.emacsPackagesNgGen
-
+let emacsPackage = with pkgs.emacs-pkgs; lib.pipe emacsPgtk [
+  emacsPackagesNgGen
   (e: e.emacsWithPackages (p: with p; [
     vterm
     emacsql-sqlite
@@ -11,21 +10,6 @@ let emacsPackage = lib.pipe pkgs.emacs-pkgs.emacsPgtkGcc [
 ];
 in
 {
-  nixpkgs.overlays = [
-    (final: prev: with final; {
-      mu = prev.mu.overrideAttrs (_: rec {
-        version = "1.4.15";
-
-        src = fetchFromGitHub {
-          owner = "djcb";
-          repo = "mu";
-          rev = version;
-          sha256 = "sha256-VIUA0W+AmEbvGWatv4maBGILvUTGhBgO3iQtjIc3vG8=";
-        };
-      });
-    })
-  ];
-
   services.emacs = {
     enable = true;
     package = emacsPackage;

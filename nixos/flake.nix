@@ -7,8 +7,8 @@
 
     # nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
 
-    nixpkgs-emacs.url = "github:NixOS/nixpkgs/1f77a4c8c74bbe896053994836790aa9bf6dc5ba";
-    emacs-overlay.url = "github:nix-community/emacs-overlay/dcb4f8e97b3a6f215e8a30bc01028fc67a4015e7";
+    # nixpkgs-emacs.url = "github:NixOS/nixpkgs/1f77a4c8c74bbe896053994836790aa9bf6dc5ba";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     nur.url = "github:nix-community/NUR";
 
@@ -52,7 +52,7 @@
 
       overlay = final: prev: {
         unstable   = mkPkgs inputs.nixpkgs-unstable [ ];
-        emacs-pkgs = mkPkgs inputs.nixpkgs-emacs [ inputs.emacs-overlay.overlay ];
+        emacs-pkgs = mkPkgs inputs.nixpkgs [ inputs.emacs-overlay.overlay ];
         my = self.packages."${system}";
       };
 
