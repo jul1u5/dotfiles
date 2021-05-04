@@ -1,0 +1,87 @@
+{
+    "layer": "bottom",
+	"height": 24,
+    "modules-left": ["sway/workspaces", "wlr/taskbar", "sway/mode"],
+    "modules-center": ["clock"],
+    "modules-right": ["sway/language", "cpu", "memory", "pulseaudio", "pulseaudio#mic", "battery", "idle_inhibitor", "tray"],
+    "sway/workspaces": {
+        "disable-markup": true,
+        "disable-scroll": true
+    },
+    "wlr/taskbar": {
+        "all-outputs": false,
+        "format": "{icon}",
+        "on-click": "activate",
+        "on-click-middle": "close"
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/language": {
+        "format": "{}",
+        "max-length": 10
+    },
+    "clock": {
+        "format": "{:%a, %b %d %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "{usage}% ",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": "{}% ",
+        "max-length": 10
+    },
+    "battery": {
+        "bat": "BAT0",
+        "adapter": "BAT0",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "format-wifi": "{essid} ",
+        "format-ethernet": "wired ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "disconnected 睊"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{icon}",
+        "format-muted": " ",
+        "format-icons": ["", "", ""],
+        "on-scroll-up": "",
+        "on-scroll-down": ""
+    },
+    "pulseaudio#mic": {
+        "format": "{format_source}",
+        "format-source": "",
+        "format-source-muted": " ",
+        "on-scroll-up": "",
+        "on-scroll-down": ""
+    },
+    "temperature": {
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 12
+    }
+}
