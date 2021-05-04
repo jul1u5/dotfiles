@@ -120,8 +120,8 @@
 (after! lsp-mode
   (setq lsp-lens-enable t)
   (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-rust-analyzer-import-merge-behaviour "last"))
-  ;; (setq lsp-rust-racer-completion nil))
+  (setq lsp-rust-analyzer-import-merge-behaviour "last")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.direnv\\'"))
 
 (after! lsp-haskell
   (setq lsp-log-io t)
