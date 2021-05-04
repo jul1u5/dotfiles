@@ -32,32 +32,42 @@
     '';
 
     extraPackages = with pkgs; [
-      swaylock # lockscreen
+      swaylock
       swayidle
-      xwayland # for legacy apps
-      waybar # status bar
-      mako # notification daemon
-      kanshi # autorandr
-      wob # Wayland Overlay Bar
+
+      xwayland
+      kanshi
+
+      mako
+      wob
+
+      qt5.qtwayland
+
       gnome3.networkmanagerapplet
       libappindicator
-      qt5.qtwayland
+
+      wdisplays
+
       wofi
+      rofimoji
 
       wl-clipboard
 
-      slurp
-      grim
       sway-contrib.grimshot
 
-      udiskie
       nwg-launchers
-      wayvnc
       wf-recorder
     ];
   };
 
   programs.waybar.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    polkit_gnome
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+  ];
 
   xdg.portal = {
     enable = true;
@@ -71,14 +81,6 @@
   systemd.user.services.xdg-desktop-portal.environment = {
     XDG_DESKTOP_PORTAL_DIR = config.environment.variables.XDG_DESKTOP_PORTAL_DIR;
   };
-
-  environment.systemPackages = with pkgs; [
-    polkit_gnome
-    gtk-engine-murrine
-    gtk_engines
-    gsettings-desktop-schemas
-    # libsForQt5.qtstyleplugins
-  ];
 
   services = {
     pipewire.enable = true;

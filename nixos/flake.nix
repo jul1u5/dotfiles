@@ -32,7 +32,7 @@
           joypixels.acceptLicense = true;
         };
 
-        overlays = overlays;
+        overlays = overlays ++ (lib.attrValues self.overlays);
       };
 
       pkgs = mkPkgs nixpkgs [
@@ -56,7 +56,7 @@
         my = self.packages."${system}";
       };
 
-      overlays = mapModules ./overlays (p: import p { inherit inputs; });
+      overlays = mapModules ./overlays import;
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
 
