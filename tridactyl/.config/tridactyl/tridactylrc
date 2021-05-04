@@ -1,0 +1,10 @@
+set smoothscroll true
+
+bind --mode=normal \ mode ignore
+bind --mode=ignore \ mode normal
+
+blacklistadd calendar.google.com
+blacklistadd docs.google.com
+blacklistadd drive.google.com
+blacklistadd mail.google.com
+blacklistadd youtube.com
