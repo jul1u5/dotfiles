@@ -38,6 +38,7 @@
       xwayland
       kanshi
 
+      waybar
       mako
       wob
 
@@ -59,8 +60,6 @@
       wf-recorder
     ];
   };
-
-  programs.waybar.enable = true;
 
   environment.systemPackages = with pkgs; [
     polkit_gnome
