@@ -29,7 +29,6 @@
 
         config = {
           allowUnfree = true;
-          joypixels.acceptLicense = true;
         };
 
         overlays = overlays ++ (lib.attrValues self.overlays);
