@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, lib, pkgs, ... }:
 
 {
   imports = lib.attrValues {
@@ -10,6 +10,28 @@
   } ++ [
     ./hardware-configuration.nix
   ];
+
+  users = {
+    defaultUserShell = pkgs.zsh;
+
+    users.julius = {
+      isNormalUser = true;
+
+      extraGroups = [
+        "adbusers"
+        "dialout"
+        "docker"
+        "input"
+        "libvirtd"
+        "networkmanager"
+        "sway"
+        "vboxusers"
+        "video"
+        "wheel"
+        "wireshark"
+      ];
+    };
+  };
 
   location.provider = "geoclue2";
 
@@ -33,6 +55,8 @@
     tlp.enable = true;
     thermald.enable = true;
 
+    fwupd.enable = true;
+
     xserver = {
       enable = true;
 
@@ -42,13 +66,6 @@
 
         defaultSession = "sway";
       };
-
-      videoDrivers = [ "modesetting" ];
-      useGlamor = true;
-
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
     };
   };
 

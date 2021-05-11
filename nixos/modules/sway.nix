@@ -62,11 +62,15 @@
   };
 
   environment.systemPackages = with pkgs; [
-    polkit_gnome
     gtk-engine-murrine
     gtk_engines
     gsettings-desktop-schemas
+
+    polkit_gnome
   ];
+
+  # Link libexec path so that polkit can be started by sway
+  environment.pathsToLink = [ "/libexec" ];
 
   xdg.portal = {
     enable = true;
@@ -85,7 +89,7 @@
     pipewire.enable = true;
 
     redshift = {
-      enable = true;
+      # enable = true;
       package = pkgs.redshift-wlr;
       executable = "/bin/redshift-gtk";
     };

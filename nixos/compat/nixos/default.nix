@@ -1,8 +1,8 @@
 { ... }:
 let
-  default = (import ../.).defaultNix;
-  inherit (default) lib;
+  flake = (import ../.).defaultNix;
+  inherit (flake) lib;
 
   hostname = lib.fileContents /etc/hostname;
 in
-default.nixosConfigurations.${hostname}
+flake.nixosConfigurations.${hostname}

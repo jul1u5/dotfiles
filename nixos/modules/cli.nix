@@ -38,6 +38,7 @@
     imagemagick
     imwheel
     inotify-tools
+    inxi
     jq
     lf
     libinput
@@ -78,7 +79,6 @@
     socat
     sshfs
     starship
-    steam-run
     stow
     strace
     thefuck

@@ -25,6 +25,8 @@ function e() {
     fi
 }
 
+alias nixos-option='nixos-option -I nixpkgs=/etc/nixos/compat -I nixos-config=/etc/nixos/compat/nixos'
+
 function ,() {
     local package=$(
         nix-locate --top-level --at-root --whole-name "/bin/$1" \
