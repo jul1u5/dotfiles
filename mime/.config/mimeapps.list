@@ -1,0 +1,17 @@
+[Added Associations]
+application/pdf=org.pwmt.zathura.desktop;emacsclient.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=writer.desktop
+image/jpeg=org.gnome.gThumb.desktop
+image/png=org.gnome.gThumb.desktop
+text/plain=nvim.desktop
+text/x-python=nvim.desktop
+text/x-c++src=nvim.desktop;emacs.desktop;
+
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop
+application/postscript=org.pwmt.zathura.desktop
+image/svg+xml=org.gnome.gThumb.desktop
+inode/directory=ranger.desktop
+x-scheme-handler/magnet=userapp-transmission-gtk-XXBEX0.desktop
+dotfiles/nixos/pkgs/applications.nix=nvim.desktop
+text/plain=nvim.desktop
