@@ -3,8 +3,6 @@
 {
   imports = [ ./cachix.nix ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
 
-  sound.enable = true;
-
   programs = {
     gnupg.agent = {
       enable = true;
@@ -22,14 +20,20 @@
       experimental-features = nix-command flakes ca-references
     '';
 
+    trustedUsers = [ "root" "@wheel" ];
+
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
-      "nixos-config=${inputs.self}/compat/nixos"
+      # "nixpkgs=${./compat}"
+      # "nixos-config=${./compat/nixos}"
     ];
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
     };
+
+    # https://github.com/NixOS/nixpkgs/issues/124215
+    sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
 
     gc.automatic = true;
   };

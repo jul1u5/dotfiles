@@ -2,15 +2,16 @@
 
 {
   services = {
-    xserver.desktopManager.gnome3.enable = true;
+    xserver.desktopManager.gnome.enable = true;
 
-    gnome3.sushi.enable = true;
+    gnome.sushi.enable = true;
+    power-profiles-daemon.enable = false;
   };
 
   programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs; [
-    gnome3.gnome-tweaks
+    gnome.gnome-tweaks
     gnomeExtensions.remove-dropdown-arrows
     gnomeExtensions.system-monitor
     gnomeExtensions.appindicator

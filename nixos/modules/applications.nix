@@ -1,49 +1,53 @@
-{ pkgs, modulesPath, ... }:
+{ pkgs, ... }:
 
 {
-  programs = { wireshark.enable = true; };
-
   environment.systemPackages = with pkgs; [
-    androidStudioPackages.canary
-    alacritty
-    blender
-    unstable.discord
-    dmenu
-    feh
+    # Browsers
+    lynx
+    google-chrome
     (firefox-wayland.override {
       cfg.enableTridactylNative = true;
     })
-    flameshot
+
+    # Terminals
+    kitty
+    alacritty
+
+    # Development
+    vimHugeX
+    androidStudioPackages.canary
+    octave
+    postman
+
+    # Graphics
+    feh
     gimp
-    gnome3.nautilus
-    google-chrome
-    gparted
     gthumb
     inkscape
-    kitty
     krita
+
+    # Office
     libreoffice
-    unstable.lutris
-    legendary-gl
-    wineWowPackages.stable
-    lxappearance
+    zotero
+
+    # Video
     mpv
-    octave
-    pavucontrol
-    postman
-    pulseeffects-pw
-    remmina
-    rofi
-    scrot
+
+    # Instant Messengers
+    unstable.discord
+    element-desktop
     signal-desktop
     slack
-    spotify
     teams
-    transmission-gtk
-    virt-manager
-    wireshark
-    zathura
     zoom-us
-    zotero
+
+    # Misc
+    blender
+    gnome3.nautilus
+    gparted
+    psensor
+    remmina
+    transmission-gtk
+    zathura
   ];
 }

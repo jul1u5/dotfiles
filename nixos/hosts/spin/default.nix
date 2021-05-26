@@ -1,13 +1,10 @@
 { inputs, lib, pkgs, ... }:
 
 {
-  imports = lib.attrValues {
-    inherit (inputs.nixos-hardware.nixosModules)
-      common-cpu-intel
-      common-pc-laptop
-      common-pc-laptop-ssd
-      ;
-  } ++ [
+  imports = with inputs.nixos-hardware.nixosModules; [
+    common-cpu-intel
+    common-pc-laptop
+    common-pc-laptop-ssd
     ./hardware-configuration.nix
   ];
 
@@ -33,16 +30,12 @@
     };
   };
 
-  location.provider = "geoclue2";
-
   programs = {
     light.enable = true;
     fish.enable = true;
     mtr.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
+
+    neovim.defaultEditor = true;
   };
 
   services = {
@@ -50,10 +43,9 @@
     localtime.enable = true;
     rpcbind.enable = true;
 
-    upower.enable = true;
-
-    tlp.enable = true;
     thermald.enable = true;
+    tlp.enable = true;
+    upower.enable = true;
 
     fwupd.enable = true;
 
@@ -61,8 +53,8 @@
       enable = true;
 
       displayManager = {
-        # gdm.enable = true;
-        lightdm.enable = true;
+        gdm.enable = true;
+        # lightdm.enable = true;
 
         defaultSession = "sway";
       };
@@ -91,10 +83,5 @@
 
   environment.variables = {
     BROWSER = "firefox";
-  };
-
-  nix = {
-    trustedUsers = [ "root" "julius" ];
-    allowedUsers = [ "root" "@wheel" ];
   };
 }

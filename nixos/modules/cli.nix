@@ -2,103 +2,111 @@
 
 {
   environment.systemPackages = with pkgs; [
-    acpi
-    appimage-run
-    nodejs
-    atool
+    # Core
     bat
-    bc
     binutils
-    bitwarden-cli
-    bottom
-    cachix
-    cmatrix
     colordiff
-    cowsay
-    dragon-drop
     exa
     fd
-    figlet
     file
-    fortune
-    fzf
+    psmisc
+    ripgrep
+    tree
+
+    # Archivers
+    atool
+    zip
+    unzip
+    unrar
+
+    # Security
+    bitwarden-cli
+    gnupg
+    pass
+
+    # System Monitor
+    bottom
+    htop
+
+    # Calculator
+    bc
+    libqalculate
+
+    # Git
     delta
     gh
     gitAndTools.gitFull
-    gnome3.libsecret
-    glxinfo
-    gnupg
-    gnutls
-    googler
-    graphviz
-    hexyl
-    htop
-    httpie
-    hyperfine
-    imagemagick
-    imwheel
-    inotify-tools
-    inxi
-    jq
+    gnome.libsecret
+
+    # File explorer
+    ranger
     lf
-    libinput
-    libfsm
-    gnome3.librsvg
-    libqalculate
-    lolcat
-    lshw
-    lsof
-    lynx
+    nnn
+
+    # Nix
+    cachix
     manix
-    moreutils
-    ncdu
-    neofetch
-    neovim
-    nfs-utils
     niv
     nix-index
     nix-prefetch-git
     nixpkgs-fmt
-    nmap-graphical
-    nnn
-    openvpn
-    pamixer
-    pandoc
-    pass
     patchelf
-    pciutils
-    playerctl
-    psensor
-    psmisc
-    radare2
-    ranger
-    ripgrep
-    rlwrap
-    shellcheck
-    slurp
-    socat
-    sshfs
-    starship
-    stow
-    strace
-    thefuck
-    tldr
-    tmux
-    traceroute
-    translate-shell
-    trash-cli
-    tree
-    unrar
-    unzip
-    usbutils
-    vimHugeX
-    weechat
-    wget
+
+    # Xorg
     xbrightness
     xclip
     xorg.xev
     xorg.xeyes
+
+    # Filesystem
+    nfs-utils
+    sshfs
+
+    # Fun
+    cmatrix
+    cowsay
+    figlet
+    fortune
+    lolcat
+    neofetch
+
+    # Tools
+    appimage-run
+    dragon-drop
+    fzf
+    graphviz
+    hexyl
+    httpie
+    hyperfine
+    inotify-tools
+    jq
+    ncdu
+    pandoc
+    radare2
+    rlwrap
+    shellcheck
+    starship
+    stow
+    thefuck
+    tldr
+    tmux
+    translate-shell
+    trash-cli
     youtube-dl
-    zip
+
+    # Misc
+    glxinfo
+    gnome.librsvg
+    imagemagick
+    inxi
+    libfsm
+    libinput
+    lshw
+    moreutils
+    nodejs
+    pciutils
+    strace
+    usbutils
+    lsof
   ];
 }

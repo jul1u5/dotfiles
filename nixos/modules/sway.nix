@@ -89,7 +89,7 @@
     pipewire.enable = true;
 
     redshift = {
-      # enable = true;
+      enable = true;
       package = pkgs.redshift-wlr;
       executable = "/bin/redshift-gtk";
     };

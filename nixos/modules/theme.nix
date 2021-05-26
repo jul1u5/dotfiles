@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.modules.rice;
+  cfg = config.modules.theme;
 in
 {
-  options.modules.rice = {
+  options.modules.theme = {
     theme = {
       package = mkOption {
         type = types.package;
