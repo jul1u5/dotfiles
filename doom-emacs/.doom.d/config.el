@@ -75,13 +75,13 @@
                         t)))
 
 (after! circe
-  (set-irc-server! "chat.freenode.net"
+  (set-irc-server! "irc.libera.chat"
                    `(:tls t
                      :port 6697
                      :nick "jul1u5"
-                     :sasl-username ,(+pass-get-user   "irc/freenode.net")
-                     :sasl-password (lambda (&rest _) (+pass-get-secret "irc/freenode.net"))
-                     :channels ("#emacs" "#haskell" "#nixos" "#nix-community"))))
+                     :sasl-username ,(+pass-get-user "irc/libera.chat")
+                     :sasl-password (lambda (&rest _) (+pass-get-secret "irc/libera.chat"))
+                     :channels ("#emacs" "#haskell"))))
 
 (after! ispell
   ;; Also make sure dictionary file is configured
