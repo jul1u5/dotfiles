@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     # Browsers
     lynx
-    google-chrome
+    chromium
     (firefox-wayland.override {
       cfg.enableTridactylNative = true;
     })
