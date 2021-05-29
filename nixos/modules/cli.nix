@@ -101,9 +101,9 @@
     inxi
     libfsm
     libinput
+    libnotify
     lshw
     moreutils
-    nodejs
     pciutils
     strace
     usbutils
