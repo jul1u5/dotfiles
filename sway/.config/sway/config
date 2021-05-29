@@ -4,8 +4,6 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-exec systemctl --user import-environment
-
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -52,7 +50,6 @@ hide_edge_borders --i3 smart
 
 # set floating mode for specific applications
 for_window [instance="lxappearance"] floating enable
-for_window [app_id="blueberry.py"] floating enable
 for_window [app_id="firefox" title="^About Mozilla Firefox$"] {
    floating enable
    border pixel 1
@@ -123,7 +120,7 @@ for_window [class="Spotify"] move window to workspace 10
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-output * bg ~/Pictures/faro16x9.jpg fill
+output * bg faro16x9.jpg fill
 
 output HDMI-A-1 resolution 1920x1080 position 0,0
 output eDP-1 resolution 1920x1080 position 0,1080
@@ -346,9 +343,12 @@ bar {
     swaybar_command waybar
 }
 
-exec nm-applet --indicator
 exec /run/current-system/sw/libexec/polkit-gnome-authentication-agent-1
-exec pulseeffects --gapplication-service
+
+exec nm-applet --indicator
+exec udiskie -Ns
+exec blueman-applet
+# exec pulseeffects --gapplication-service
 
 workspace 10
 
@@ -357,3 +357,5 @@ exec spotify
 workspace 2
 
 exec firefox
+
+include /etc/sway/config.d/*

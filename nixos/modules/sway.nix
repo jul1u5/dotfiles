@@ -9,8 +9,6 @@
     extraSessionCommands = ''
       systemctl --user import-environment
 
-      export XDG_CURRENT_DESKTOP=sway
-
       export MOZ_ENABLE_WAYLAND=1
       export MOZ_USE_XINPUT2=1
 
@@ -47,6 +45,8 @@
       gnome3.networkmanagerapplet
       libappindicator
 
+      blueberry
+      udiskie
       wdisplays
 
       wofi
@@ -72,14 +72,7 @@
   # Link libexec path so that polkit can be started by sway
   environment.pathsToLink = [ "/libexec" ];
 
-  xdg.portal = {
-    enable = true;
-    # gtkUsePortal = true;
-    extraPortals = with pkgs; [
-      # xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
-  };
+  xdg.portal.enable = true;
 
   systemd.user.services.xdg-desktop-portal.environment = {
     XDG_DESKTOP_PORTAL_DIR = config.environment.variables.XDG_DESKTOP_PORTAL_DIR;
