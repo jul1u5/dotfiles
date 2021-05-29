@@ -47,6 +47,8 @@
     tlp.enable = true;
     upower.enable = true;
 
+    blueman.enable = true;
+
     fwupd.enable = true;
 
     xserver = {
