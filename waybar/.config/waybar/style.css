@@ -77,7 +77,9 @@
   color: @text_color;
 }
 
-#pulseaudio.muted {
+#pulseaudio.muted:not(.mic) {
+  background-color: @warning_bg_color;
+  color: @warning_color;
   border-bottom: 2px solid @warning_color;
 }
 
