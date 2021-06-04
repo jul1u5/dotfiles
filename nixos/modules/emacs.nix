@@ -1,13 +1,17 @@
 { lib, pkgs, ... }:
 
-let emacsPackage = with pkgs.emacs-pkgs; lib.pipe emacsPgtk [
-  emacsPackagesNgGen
-  (e: e.emacsWithPackages (p: with p; [
-    vterm
-    emacsql-sqlite
-    pdf-tools
-  ]))
-];
+let
+  inherit (pkgs) emacs-pkgs;
+
+  emacsPackage = lib.pipe emacs-pkgs.emacsPgtk [
+    emacs-pkgs.emacsPackagesNgGen (e:
+      e.emacsWithPackages (p: with p; [
+        vterm
+        emacsql-sqlite
+        pdf-tools
+      ])
+    )
+  ];
 in
 {
   services.emacs = {

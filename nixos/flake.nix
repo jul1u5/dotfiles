@@ -1,14 +1,11 @@
 {
   inputs = {
-    # nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/aa8c68053a228b7052ac908d573f7c347f02d5af";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "nixpkgs/nixos-21.05";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    # nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
-
-    # nixpkgs-emacs.url = "github:NixOS/nixpkgs/1f77a4c8c74bbe896053994836790aa9bf6dc5ba";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     nur.url = "github:nix-community/NUR";
@@ -28,15 +25,12 @@
       mkPkgs = pkgs: overlays: import pkgs {
         inherit system;
 
-        config = {
-          allowUnfree = true;
-        };
+        config.allowUnfree = true;
 
         overlays = overlays ++ (lib.attrValues self.overlays);
       };
 
       pkgs = mkPkgs nixpkgs [
-        # inputs.nixpkgs-wayland.overlay
         self.overlay
       ];
 
@@ -51,8 +45,8 @@
       inherit lib;
 
       overlay = final: prev: {
-        unstable   = mkPkgs inputs.nixpkgs-unstable [ ];
-        emacs-pkgs = mkPkgs inputs.nixpkgs [ inputs.emacs-overlay.overlay ];
+        unstable   = mkPkgs inputs.nixpkgs-master [ ];
+        emacs-pkgs = mkPkgs inputs.nixpkgs-unstable [ inputs.emacs-overlay.overlay ];
         my = self.packages."${system}";
       };
 

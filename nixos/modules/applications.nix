@@ -5,7 +5,7 @@
     # Browsers
     lynx
     chromium
-    (firefox-wayland.override {
+    (unstable.firefox-wayland.override {
       cfg.enableTridactylNative = true;
     })
 
