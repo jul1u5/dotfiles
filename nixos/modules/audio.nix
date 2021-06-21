@@ -1,10 +1,9 @@
 { pkgs, ... }:
 
 {
-  sound.enable = true;
-
   hardware.pulseaudio = {
     enable = false;
+
     daemon.config = {
       realtime-scheduling = "yes";
     };
@@ -19,20 +18,27 @@
 
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+
     pulse.enable = true;
+    jack.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
-    pulseaudioLight
+    pulseaudioFull
+    jack2Full
+
     pamixer
     pulsemixer
 
     pavucontrol
     pulseeffects-pw
 
-    spotify
+    cadence
     playerctl
   ];
 }

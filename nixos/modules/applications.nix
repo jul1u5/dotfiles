@@ -47,6 +47,7 @@
     gparted
     psensor
     remmina
+    spotify
     transmission-gtk
     zathura
   ];
