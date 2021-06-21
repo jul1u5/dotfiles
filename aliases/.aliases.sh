@@ -27,6 +27,8 @@ function e() {
 
 alias nixos-option='nixos-option -I nixpkgs=/etc/nixos/compat -I nixos-config=/etc/nixos/compat/nixos'
 
+alias nixos-diff='nix profile diff-closures --profile /nix/var/nix/profiles/system | cat --pager="less -FR +G"'
+
 function ,() {
     local package=$(
         nix-locate --top-level --at-root --whole-name "/bin/$1" \
