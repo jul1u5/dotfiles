@@ -59,6 +59,7 @@ plugins=(
   history-substring-search
   nix-shell
   tmux
+  z
   zsh-autosuggestions
   zsh-completions
   zsh-syntax-highlighting
@@ -89,17 +90,19 @@ if [ -f ~/.aliases.sh ]; then
   source ~/.aliases.sh
 fi
 
-function lfcd() {
-    local tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
+ranger_cd() {
+  local temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+  ranger --choosedir="$temp_file" -- "${@:-$PWD}"
 
-    if [ -f "$tmp" ]; then
-        local dir="$(cat "$tmp")"
-        rm -f "$tmp" >/dev/null
-        [ -d "$dir" ] && [ "$dir" != "$PWD" ] && cd "$dir"
-    fi
+  if [ -f "$temp_file" ]; then
+    local chosen_dir="$(cat -- "$temp_file")"
+    rm -f -- "$temp_file"
+
+    [ -d "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ] && cd -- "$chosen_dir"
+  fi
 }
-bindkey -s '^o' 'lfcd\n'
+
+bindkey -s '^o' 'ranger_cd\n'
 
 export WORDCHARS='$()[]<>\-'
 
