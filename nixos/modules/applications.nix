@@ -5,7 +5,7 @@
     # Browsers
     lynx
     chromium
-    (unstable.firefox-wayland.override {
+    (firefox-wayland.override {
       cfg.enableTridactylNative = true;
     })
 
@@ -20,9 +20,9 @@
     postman
 
     # Graphics
-    feh
     gimp
     gthumb
+    imv
     inkscape
     krita
 

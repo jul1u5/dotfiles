@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  programs.thefuck.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Core
     bat
@@ -11,6 +13,7 @@
     file
     psmisc
     ripgrep
+    sd
     tree
 
     # Archivers
@@ -27,6 +30,7 @@
     # System Monitor
     bottom
     htop
+    procs
 
     # Calculator
     bc
@@ -74,25 +78,25 @@
     appimage-run
     dragon-drop
     fzf
+    gdu
     graphviz
     hexyl
-    httpie
+    ht-rust
     hyperfine
     inotify-tools
     jq
-    ncdu
     pandoc
     radare2
     rlwrap
     shellcheck
     starship
     stow
-    thefuck
     tldr
     tmux
     translate-shell
     trash-cli
     youtube-dl
+    zoxide
 
     # Misc
     glxinfo

@@ -6,7 +6,7 @@
   programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [
-    unstable.lutris
+    lutris
     legendary-gl
     wineWowPackages.stable
   ];
