@@ -45,7 +45,6 @@
   padding: 0 4px;
   background: transparent;
   color: @text_color;
-  border-bottom: 2px solid transparent;
 }
 
 #workspaces button.focused {
@@ -67,10 +66,10 @@
 #network,
 #pulseaudio,
 #temperature,
-#spotify,
+#scratchpad,
 #tray {
   color: @text_bg_color;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 #clock {
@@ -86,9 +85,6 @@
 #pulseaudio.mic,
 #idle_inhibitor {
   min-width: 16px;
-}
-
-#pulseaudio.mic {
   color: @text_color;
 }
 
@@ -96,10 +92,6 @@
   background-color: @danger_bg_color;
   color: @danger_color;
   border-bottom: 2px solid @danger_color;
-}
-
-#idle_inhibitor {
-  color: @text_color;
 }
 
 #idle_inhibitor.activated {
@@ -119,20 +111,12 @@
 }
 
 #battery.warning:not(.charging) {
-  background-color: @danger_bg_color;
-  color: @danger_color;
-  border-bottom: 2px solid transparent;
-
-  animation-name: blink;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  background-color: @warning_color;
+  color: @warning_bg_color;
 }
 
-@keyframes blink {
-  to {
-    border-bottom: 2px solid @danger_color;
-  }
+#battery.critical:not(.charging) {
+  background-color: @danger_color;
+  color: @danger_bg_color;
 }
 
