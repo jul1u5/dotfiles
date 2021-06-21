@@ -11,7 +11,6 @@
         "clock"
     ],
     "modules-right": [
-        // "custom/spotify",
         "sway/language",
         "cpu",
         "memory",
@@ -21,14 +20,6 @@
         "battery",
         "tray"
     ],
-
-    "custom/spotify": {
-        "interval": 1,
-        "return-type": "json",
-        "exec": "~/.config/waybar/spotify.sh",
-        "exec-if": "pgrep spotify",
-        "escape": true
-    },
 
     "sway/workspaces": {
         "disable-markup": true,
@@ -55,7 +46,7 @@
     },
 
     "clock": {
-        "format": "{:%a, %b %d %H:%M}",
+        "format": "{:%H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
     },
 
@@ -101,7 +92,7 @@
         "adapter": "BAT0",
         "states": {
             "warning": 30,
-            "critical": 15
+            "critical": 20
         },
         "format": "{capacity}% {icon}",
         "format-charging": "{capacity}% ",
@@ -112,6 +103,6 @@
 
     "tray": {
         "icon-size": 16,
-        "spacing": 12
+        "spacing": 16
     },
 }
