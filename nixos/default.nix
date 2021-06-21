@@ -26,16 +26,12 @@
 
     nixPath = [
       "nixpkgs=${inputs.nixpkgs}"
-      # "nixpkgs=${./compat}"
-      # "nixos-config=${./compat/nixos}"
     ];
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
+      unstable.flake = inputs.nixpkgs-unstable;
     };
-
-    # https://github.com/NixOS/nixpkgs/issues/124215
-    sandboxPaths = [ "/bin/sh=${pkgs.bash}/bin/sh" ];
 
     gc.automatic = true;
   };
