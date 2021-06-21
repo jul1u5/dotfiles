@@ -30,7 +30,7 @@
     '';
 
     extraPackages = with pkgs; [
-      swaylock
+      swaylock-effects
       swayidle
 
       xwayland
