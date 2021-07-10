@@ -1,7 +1,7 @@
 alias rm='trash-put'
 alias cat=bat
 
-alias ls='exa --icons --git --group-directories-first'
+alias ls='exa --binary --icons --git --group-directories-first'
 alias ll='ls -lgh'
 alias la='ll -a'
 
@@ -25,7 +25,7 @@ function e() {
     fi
 }
 
-alias nixos-option='nixos-option -I nixpkgs=/etc/nixos/compat -I nixos-config=/etc/nixos/compat/nixos'
+alias nixos-option='nixos-option -I nixpkgs=/etc/current-configuration/compat -I nixos-config=/etc/current-configuration/compat/nixos'
 
 alias nixos-diff='nix profile diff-closures --profile /nix/var/nix/profiles/system | cat --pager="less -FR +G"'
 

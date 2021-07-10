@@ -1,44 +1,14 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [ ./cachix.nix ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
+  imports = [
+    ./cachix.nix
+    inputs.home-manager.nixosModules.home-manager
+  ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
 
-  programs = {
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-  };
-
-  services.earlyoom.enable = true;
-
-  environment.variables = {
-    NIXPKGS_ALLOW_UNFREE = "1";
-  };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-references
-    '';
-
-    trustedUsers = [ "root" "@wheel" ];
-
-    nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
-    ];
-
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-      unstable.flake = inputs.nixpkgs-unstable;
-    };
-
-    gc.automatic = true;
-  };
+  environment.etc.current-configuration.source = ./.;
 
   fileSystems."/".device = lib.mkDefault "/dev/disk/by-label/nixos";
-
-  system.autoUpgrade.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -46,5 +16,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "21.05"; # Did you read the comment?
 }
