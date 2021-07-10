@@ -1,18 +1,7 @@
 { pkgs, ... }:
 
 {
-  hardware.pulseaudio = {
-    enable = false;
-
-    daemon.config = {
-      realtime-scheduling = "yes";
-    };
-
-    extraConfig = ''
-      load-module module-echo-cancel aec_method=webrtc source_master=alsa_input.pci-0000_00_1f.3.analog-stereo source_name=echo_cancelled
-      set-default-source echo_cancelled
-    '';
-  };
+  hardware.pulseaudio.enable = false;
 
   security.rtkit.enable = true;
 
@@ -35,10 +24,10 @@
     pamixer
     pulsemixer
 
-    pavucontrol
-    pulseeffects-pw
-
     cadence
+    cava
+    pavucontrol
     playerctl
+    pulseeffects-pw
   ];
 }
