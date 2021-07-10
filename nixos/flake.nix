@@ -6,8 +6,12 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    home-manager = {
+      url = "github:rycee/home-manager/release-21.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
     nur.url = "github:nix-community/NUR";
 
     flake-compat = {
