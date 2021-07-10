@@ -2,11 +2,12 @@ set smoothscroll true
 
 bind yd tabduplicate
 
-bind --mode=normal \ mode ignore
-bind --mode=ignore \ mode normal
+bind --mode=normal <C-\> mode ignore
+bind --mode=ignore <C-\> mode normal
 
 blacklistadd calendar.google.com
 blacklistadd docs.google.com
 blacklistadd drive.google.com
 blacklistadd mail.google.com
 blacklistadd youtube.com
+blacklistadd overleaf.com
