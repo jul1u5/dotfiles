@@ -1,7 +1,13 @@
 { pkgs, ... }:
 
 {
-  programs.thefuck.enable = true;
+  programs = {
+    neovim.defaultEditor = true;
+
+    thefuck.enable = true;
+  };
+
+  users.defaultUserShell = pkgs.zsh;
 
   environment.systemPackages = with pkgs; [
     # Core
@@ -56,12 +62,6 @@
     nixpkgs-fmt
     patchelf
 
-    # Xorg
-    xbrightness
-    xclip
-    xorg.xev
-    xorg.xeyes
-
     # Filesystem
     nfs-utils
     sshfs
@@ -81,7 +81,6 @@
     gdu
     graphviz
     hexyl
-    ht-rust
     hyperfine
     inotify-tools
     jq

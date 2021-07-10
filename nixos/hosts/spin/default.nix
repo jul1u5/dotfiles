@@ -8,82 +8,49 @@
     ./hardware-configuration.nix
   ];
 
-  users = {
-    defaultUserShell = pkgs.zsh;
-
-    users.julius = {
-      isNormalUser = true;
-
-      extraGroups = [
-        "adbusers"
-        "dialout"
-        "docker"
-        "input"
-        "libvirtd"
-        "networkmanager"
-        "sway"
-        "vboxusers"
-        "video"
-        "wheel"
-        "wireshark"
-      ];
-    };
+  modules = {
+    laptop.enable = true;
   };
 
   programs = {
-    light.enable = true;
-    fish.enable = true;
-    mtr.enable = true;
-
-    neovim.defaultEditor = true;
-  };
-
-  services = {
-    locate.enable = true;
-    localtime.enable = true;
-    rpcbind.enable = true;
-
-    thermald.enable = true;
-    tlp.enable = true;
-    upower.enable = true;
-
-    blueman.enable = true;
-
-    fwupd.enable = true;
-
-    xserver = {
+    gnupg.agent = {
       enable = true;
-
-      displayManager = {
-        gdm.enable = true;
-        # lightdm.enable = true;
-
-        defaultSession = "sway";
-      };
+      enableSSHSupport = true;
     };
   };
 
   security = {
     sudo.wheelNeedsPassword = false;
-
-    pam.services = {
-      gdm.enableGnomeKeyring = true;
-      lightdm.enableGnomeKeyring = true;
-    };
   };
 
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_TIME = "en_IE.UTF-8";
-      LC_MONETARY = "lt_LT.UTF-8";
-      LC_PAPER = "lt_LT.UTF-8";
-      LC_ADDRESS = "lt_LT.UTF-8";
-    };
+  services = {
+    fwupd.enable = true;
+    earlyoom.enable = true;
+    localtime.enable = true;
+    locate.enable = true;
   };
 
-  environment.variables = {
-    BROWSER = "firefox";
+  networking = {
+    # useDHCP = false;
+    # interfaces = {
+    #   wlp1s0.useDHCP = true;
+    #   enp0s20f0u3u1u4.useDHCP = true;
+    # };
+  };
+
+  user = {
+    extraGroups = [
+      "adbusers"
+      "dialout"
+      "docker"
+      "input"
+      "libvirtd"
+      "networkmanager"
+      "sway"
+      "vboxusers"
+      "video"
+      "wheel"
+      "wireshark"
+    ];
   };
 }

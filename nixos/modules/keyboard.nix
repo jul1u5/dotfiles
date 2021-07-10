@@ -5,5 +5,4 @@
   };
 
   console.useXkbConfig = true;
-  # console.font = "JetBrainsMono Nerd Font";
 }
