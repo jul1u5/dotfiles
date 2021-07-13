@@ -359,7 +359,7 @@ exec /run/current-system/sw/libexec/polkit-gnome-authentication-agent-1
 exec nm-applet --indicator
 exec udiskie -Ns
 exec blueman-applet
-# exec pulseeffects --gapplication-service
+exec rot8
 
 workspace 10
 
