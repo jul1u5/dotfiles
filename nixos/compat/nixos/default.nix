@@ -1,3 +1,4 @@
+{ ... }:
 let
   flake = (import ../.).defaultNix;
   inherit (flake) lib;

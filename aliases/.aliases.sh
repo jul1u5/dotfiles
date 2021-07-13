@@ -25,7 +25,7 @@ function e() {
     fi
 }
 
-alias nixos-option='nixos-option -I nixpkgs=/etc/current-configuration/compat -I nixos-config=/etc/current-configuration/compat/nixos'
+alias nixos-option='nixos-option -I nixpkgs=/etc/current-configuration/compat'
 
 alias nixos-diff='nix profile diff-closures --profile /nix/var/nix/profiles/system | cat --pager="less -FR +G"'
 
