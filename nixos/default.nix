@@ -3,7 +3,7 @@
 {
   imports = [
     ./cachix.nix
-  ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
+  ] ++ (lib.my.mapModulesRec' import ./modules);
 
   environment.etc.current-configuration.source = ./.;
 

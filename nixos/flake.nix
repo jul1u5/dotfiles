@@ -54,11 +54,11 @@
         my = self.packages."${system}";
       };
 
-      overlays = mapModules ./overlays import;
+      overlays = mapModules import ./overlays;
 
-      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
+      packages."${system}" = mapModules (p: pkgs.callPackage p {}) ./packages;
 
-      nixosModules = mapModulesRec ./modules import;
+      nixosModules = mapModulesRec import ./modules;
 
       nixosConfigurations = mapHosts ./hosts;
     };
