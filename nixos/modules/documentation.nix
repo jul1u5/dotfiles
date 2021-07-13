@@ -2,5 +2,5 @@
 {
   documentation.dev.enable = true;
 
-  environment.systemPackages = with pkgs; [ manpages ];
+  user.packages = with pkgs; [ manpages ];
 }

@@ -51,7 +51,7 @@ in
       QT_STYLE_OVERRIDE = "kvantum";
     };
 
-    environment.systemPackages = [
+    user.packages = [
       cfg.theme.package
       cfg.iconTheme.package
       cfg.cursorTheme.package

@@ -17,7 +17,7 @@
     jack.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     pulseaudioFull
     jack2Full
 

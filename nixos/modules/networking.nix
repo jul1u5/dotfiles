@@ -29,7 +29,7 @@
     NetworkManager-wait-online.enable = false;
   };
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     curl
     nmap-graphical
     xh
@@ -38,4 +38,6 @@
     traceroute
     wget
   ];
+
+  user.extraGroups = [ "networkanager" "wireshark" ];
 }

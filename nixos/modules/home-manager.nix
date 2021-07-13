@@ -1,20 +1,23 @@
-{ config, options, lib, ... }:
+{ config, options, lib, inputs, ... }:
 
-with lib;
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   options = {
-    user = mkOption {
-      type = types.attrs;
+    user = lib.mkOption {
+      type = lib.types.attrs;
       default = { };
     };
 
-    home = mkOption {
-      type = types.attrs;
+    home = lib.mkOption {
+      type = lib.types.attrs;
     };
   };
 
   config = {
-    users.users.${config.user.name} = mkAliasDefinitions options.user;
+    users.users.${config.user.name} = lib.mkAliasDefinitions options.user;
 
     user = let name = "julius"; in
       {
@@ -31,7 +34,7 @@ with lib;
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${config.user.name} = mkAliasDefinitions options.home;
+      users.${config.user.name} = lib.mkAliasDefinitions options.home;
     };
 
     home.home.stateVersion = config.system.stateVersion;

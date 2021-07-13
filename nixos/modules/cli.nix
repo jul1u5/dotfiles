@@ -9,7 +9,7 @@
 
   users.defaultUserShell = pkgs.zsh;
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     # Core
     bat
     binutils
@@ -84,6 +84,7 @@
     hyperfine
     inotify-tools
     jq
+    nixos-shell
     pandoc
     radare2
     rlwrap

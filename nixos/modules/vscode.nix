@@ -145,7 +145,7 @@ let
   );
 in
 {
-  environment.systemPackages = [
+  user.packages = [
     vscode-with-extensions
   ];
 }

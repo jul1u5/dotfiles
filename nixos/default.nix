@@ -1,9 +1,8 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
     ./cachix.nix
-    inputs.home-manager.nixosModules.home-manager
   ] ++ (lib.my.mapModulesRec' (toString ./modules) import);
 
   environment.etc.current-configuration.source = ./.;

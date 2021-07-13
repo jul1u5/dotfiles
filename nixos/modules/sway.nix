@@ -12,7 +12,6 @@
       export MOZ_ENABLE_WAYLAND=1
       export MOZ_USE_XINPUT2=1
 
-      # needs qt5.qtwayland in systemPackages
       export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
 
@@ -58,16 +57,10 @@
 
       nwg-launchers
       wf-recorder
+
+      my.rot8
     ];
   };
-
-  environment.systemPackages = with pkgs; [
-    gtk-engine-murrine
-    gtk_engines
-    gsettings-desktop-schemas
-
-    polkit_gnome
-  ];
 
   # Link libexec path so that polkit can be started by sway
   environment.pathsToLink = [ "/libexec" ];
@@ -87,4 +80,14 @@
       executable = "/bin/redshift-gtk";
     };
   };
+
+  user.packages = with pkgs; [
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+
+    polkit_gnome
+  ];
+
+  user.extraGroups = [ "sway" ];
 }

@@ -6,8 +6,10 @@
     libvirtd.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     docker-compose
     virt-manager
   ];
+
+  user.extraGroups = [ "docker" "libvirtd" ];
 }

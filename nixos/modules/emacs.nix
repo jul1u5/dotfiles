@@ -21,7 +21,7 @@ in
 
   fonts.fonts = with pkgs; [ emacs-all-the-icons-fonts ];
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     # TODO: wrap emacs with its dependencies
     emacsPackage
 

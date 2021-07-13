@@ -38,19 +38,9 @@
     # };
   };
 
-  user = {
-    extraGroups = [
-      "adbusers"
-      "dialout"
-      "docker"
-      "input"
-      "libvirtd"
-      "networkmanager"
-      "sway"
-      "vboxusers"
-      "video"
-      "wheel"
-      "wireshark"
-    ];
-  };
+  user.extraGroups = [
+    "dialout"
+    "video"
+    "wheel"
+  ];
 }

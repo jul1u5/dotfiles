@@ -9,7 +9,7 @@
     '';
   };
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     nodejs
     rnix-lsp
   ];

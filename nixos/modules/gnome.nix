@@ -10,7 +10,7 @@
 
   programs.dconf.enable = true;
 
-  environment.systemPackages = with pkgs; [
+  user.packages = with pkgs; [
     gnome.gnome-tweaks
     gnomeExtensions.remove-dropdown-arrows
     gnomeExtensions.system-monitor
