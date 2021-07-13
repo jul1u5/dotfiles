@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
-{
-  home = {
+let
+  kak-config = {
     programs.kakoune = {
       enable = true;
 
@@ -23,39 +23,72 @@
           assistant = "none";
         };
       };
+    };
+  };
 
-      plugins = with pkgs.kakounePlugins; [
-        kakboard
-        fzf-kak
-        active-window-kak
+  kak-modules = lib.attrValues {
+    clipboard = {
+      programs.kakoune = {
+        plugins = with pkgs.kakounePlugins; [ kakboard ];
 
-        kak-lsp
+        extraConfig = ''
+          hook global WinCreate .* %{ kakboard-enable }
+        '';
+      };
+    };
 
-        case-kak
-        kakoune-vertical-selection
-      ];
+    active-window = {
+      programs.kakoune.plugins = with pkgs.kakounePlugins; [ active-window-kak ];
+    };
 
-      extraConfig = lib.concatStringsSep "\n" [
-        # lsp
-        ''
+    fzf = {
+      programs.kakoune = {
+        plugins = with pkgs.kakounePlugins; [ fzf-kak ];
+
+        extraConfig = ''
+          map global user f ': fzf-mode<ret>'
+        '';
+      };
+    };
+
+    lsp = {
+      xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak-lsp.toml;
+
+      programs.kakoune = {
+        plugins = with pkgs.kakounePlugins; [ kak-lsp ];
+
+        extraConfig = ''
           eval %sh{kak-lsp --kakoune -s $kak_session}
           lsp-enable
 
           map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
-        ''
-        # case
-        ''
+        '';
+      };
+    };
+
+    case = {
+      programs.kakoune = {
+        plugins = with pkgs.kakounePlugins; [ case-kak ];
+
+        extraConfig = ''
           map global normal '`' ': enter-user-mode case<ret>'
-        ''
-        # vertical-selection
-        ''
+        '';
+      };
+    };
+
+    vertical-selection = {
+      programs.kakoune = {
+        plugins = with pkgs.kakounePlugins; [ kakoune-vertical-selection ];
+
+        extraConfig = ''
           map global user v     ': vertical-selection-down<ret>'
           map global user <a-v> ': vertical-selection-up<ret>'
           map global user V     ': vertical-selection-up-and-down<ret>'
-        ''
-      ];
+        '';
+      };
     };
-
-    xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak-lsp.toml;
   };
+in
+{
+  home = lib.mkMerge ([kak-config] ++ kak-modules);
 }
