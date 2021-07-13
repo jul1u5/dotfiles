@@ -7,9 +7,9 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "efernau";
     repo = pname;
-    rev = "8f2128c172be8ecc3e76e0801534413b301ccbd2";
-    sha256 = "tXKf/aGD+BJDJeDmfqZBPcG75rmD+iVvj9QB5g+8Bl0=";
+    rev = "b7b42d95a99996215ae31bddcd70af3c34c165f6";
+    sha256 = "2644dUyrc/tv/lxhXmldZlgImI2J1zoqUSjXxzFCpWo=";
   };
 
-  cargoSha256 = "pYGfuA8SdG1FQEo8QxF0PBeGiydbKOhmu8gRJ8m+c3E=";
+  cargoSha256 = "sMFa3Pe/JC1sWeeN40RBXNRV02jDyhDlb+eTvATJLfM=";
 }
