@@ -35,7 +35,6 @@
        (emoji
         +github          ; :smile:
         +unicode)        ; 🙂
-       ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -110,7 +109,7 @@
        (lookup           ; navigate your code and its documentation
         +docsets
         +dictionary)
-       (lsp
+       (lsp              ; M-x vscode
         +peek)
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
