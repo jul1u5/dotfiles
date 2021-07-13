@@ -14,7 +14,8 @@
     trustedUsers = [ "root" "@wheel" ];
 
     nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
+      "nixpkgs=${pkgs.path}"
+      "home-manager=${inputs.home-manager}"
       "nixos-config=/etc/current-configuration/compat/nixos"
     ];
 
