@@ -11,7 +11,7 @@ alias nix='noglob nix'
 
 alias o='xdg-open'
 
-alias ip='ip --color=auto'
+alias ip='ip -c=auto'
 
 if [ "$TERM" = "xterm-kitty" ]; then
     alias icat="kitty +icat"
