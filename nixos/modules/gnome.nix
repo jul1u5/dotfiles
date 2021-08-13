@@ -8,7 +8,9 @@
     power-profiles-daemon.enable = false;
   };
 
-  programs.dconf.enable = true;
+  programs = {
+    dconf.enable = true;
+  };
 
   user.packages = with pkgs; [
     gnome.gnome-tweaks

@@ -1,27 +1,44 @@
 { config, lib, pkgs, ... }:
 
-with lib;
 let cfg = config.modules.laptop;
 in
 {
-  options.modules.laptop = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
+  options = {
+    modules.laptop = {
+      enable = lib.mkOption {
+        type = with lib.types; bool;
+        default = false;
+      };
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services = {
-      thermald.enable = true;
-      tlp.enable = true;
       upower.enable = true;
+      thermald.enable = true;
+      tlp = {
+        enable = true;
+
+        settings = {
+          CPU_SCALING_GOVERNOR_ON_AC = "performance";
+          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        };
+      };
 
       blueman.enable = true;
+
+      logind.extraConfig = ''
+        HandlePowerKey=suspend
+      '';
     };
 
     programs = {
       light.enable = true;
     };
+
+    user.extraGroups = [
+      # To use 'light' the user must be in the 'video' group
+      "video"
+    ];
   };
 }

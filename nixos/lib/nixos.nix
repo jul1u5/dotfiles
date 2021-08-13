@@ -11,7 +11,7 @@ let
           nixpkgs.pkgs = pkgs;
           networking.hostName = lib.mkDefault (lib.removeSuffix ".nix" (baseNameOf path));
         }
-        ../. # /default.nix
+        ../configuration.nix
         (import path)
       ];
     };

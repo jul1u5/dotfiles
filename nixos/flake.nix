@@ -22,8 +22,6 @@
 
   outputs = inputs@{ self, nixpkgs, ... }:
     let
-      inherit (lib.my) mapModules mapModulesRec mapHosts;
-
       system = "x86_64-linux";
 
       mkPkgs = pkgs: overlays: import pkgs {
@@ -36,6 +34,7 @@
 
       pkgs = mkPkgs nixpkgs [
         self.overlay
+        inputs.emacs-overlay.overlay
       ];
 
       lib = nixpkgs.lib.extend (final: prev: {
@@ -48,18 +47,17 @@
     {
       inherit lib;
 
+      packages."${system}" = lib.my.mapModules (p: pkgs.callPackage p {}) ./packages;
+
       overlay = final: prev: {
-        unstable   = mkPkgs inputs.nixpkgs-master [ ];
-        emacs-pkgs = mkPkgs inputs.nixpkgs-unstable [ inputs.emacs-overlay.overlay ];
+        unstable = mkPkgs inputs.nixpkgs-master [ ];
         my = self.packages."${system}";
       };
 
-      overlays = mapModules import ./overlays;
+      overlays = lib.my.mapModules import ./overlays;
 
-      packages."${system}" = mapModules (p: pkgs.callPackage p {}) ./packages;
+      nixosModules = lib.my.mapModulesRec import ./modules;
 
-      nixosModules = mapModulesRec import ./modules;
-
-      nixosConfigurations = mapHosts ./hosts;
+      nixosConfigurations = lib.my.mapHosts ./hosts;
     };
 }

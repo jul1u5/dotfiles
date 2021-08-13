@@ -3,7 +3,6 @@
 {
   networking = {
     networkmanager.enable = true;
-    dhcpcd.enable = false;
 
     firewall.allowedTCPPorts = [ 8080 ];
     firewall.allowedTCPPortRanges = [
@@ -24,11 +23,6 @@
     rpcbind.enable = true;
   };
 
-  systemd.services = {
-    systemd-udev-settle.enable = false;
-    NetworkManager-wait-online.enable = false;
-  };
-
   user.packages = with pkgs; [
     curl
     nmap-graphical
@@ -39,5 +33,8 @@
     wget
   ];
 
-  user.extraGroups = [ "networkanager" "wireshark" ];
+  user.extraGroups = [
+    "networkmanager"
+    "wireshark"
+  ];
 }

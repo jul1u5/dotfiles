@@ -10,13 +10,7 @@
 
   modules = {
     laptop.enable = true;
-  };
-
-  programs = {
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+    boot.theme = "fallout";
   };
 
   security = {
@@ -24,23 +18,26 @@
   };
 
   services = {
-    fwupd.enable = true;
     earlyoom.enable = true;
-    localtime.enable = true;
-    locate.enable = true;
   };
 
   networking = {
-    # useDHCP = false;
-    # interfaces = {
-    #   wlp1s0.useDHCP = true;
-    #   enp0s20f0u3u1u4.useDHCP = true;
-    # };
+    useDHCP = false;
+    interfaces = {
+      wlp1s0.useDHCP = true;
+      enp0s20f0u3u1u4.useDHCP = true;
+    };
   };
 
-  user.extraGroups = [
-    "dialout"
-    "video"
-    "wheel"
-  ];
+  user = {
+    name = "julius";
+    description = "Julius";
+
+    isNormalUser = true;
+    uid = 1000;
+
+    extraGroups = [
+      "wheel"
+    ];
+  };
 }

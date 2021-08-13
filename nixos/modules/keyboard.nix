@@ -1,7 +1,7 @@
 {
   services.xserver = {
-    layout = "us,lt";
-    xkbOptions = "ctrl:swapcaps,grp:rctrl_rshift_toggle,compose:ralt";
+    layout = "us,lt,gr";
+    xkbOptions = "ctrl:nocaps,grp:shifts_toggle,grp:ralt";
   };
 
   console.useXkbConfig = true;

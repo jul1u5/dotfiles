@@ -1,47 +1,60 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
+  cfg = config.modules.boot;
+
   fallout-grub-theme = pkgs.fetchFromGitHub {
     owner = "shvchk";
     repo = "fallout-grub-theme";
-    hash = "sha256-r8KGj7IJBXIEi+0ewH3Kakg30iJw+kp8QBIBiEas7tk=";
     rev = "211348f7fe7002a144c709dc3eb5d04f4acde4dd";
+    sha256 = "r8KGj7IJBXIEi+0ewH3Kakg30iJw+kp8QBIBiEas7tk=";
   };
-in
-{
-  config = {
-    boot = {
-      kernelPackages = pkgs.linuxPackages_latest;
 
-      # plymouth.enable = true;
-
-      loader = {
-        efi.canTouchEfiVariables = true;
-
-        # systemd-boot = {
-        #   enable = true;
-        #   consoleMode = "max";
-        #   editor = false;
-        #   configurationLimit = 5;
-        # };
-
-        grub = {
-          enable = true;
-          device = "nodev";
-          efiSupport = true;
-          configurationLimit = 5;
-
-          extraConfig = ''
-            set theme=($drive1)//themes/fallout-grub-theme/theme.txt
-          '';
-          splashImage = "${fallout-grub-theme}/background.png";
-        };
-      };
+  mkTheme = { name, theme }: {
+    boot.loader.grub = {
+      splashImage = "${theme}/background.png";
+      extraConfig = ''
+        set theme=($drive1)//themes/${name}/theme.txt
+      '';
     };
 
     system.activationScripts.copyGrubTheme = ''
       mkdir -p /boot/themes
-      cp -R ${fallout-grub-theme}/ /boot/themes/fallout-grub-theme
+      cp -R ${theme} /boot/themes/${name}
     '';
   };
+in
+{
+  options = {
+    modules.boot = {
+      theme = lib.mkOption {
+        default = null;
+        type = with lib.types; nullOr (enum [ "fallout" ]);
+      };
+    };
+  };
+
+  config = lib.mkMerge
+    [
+      {
+        boot = {
+          kernelPackages = pkgs.linuxPackages_latest;
+
+          loader = {
+            efi.canTouchEfiVariables = true;
+
+            grub = {
+              enable = true;
+              device = "nodev";
+              efiSupport = true;
+              configurationLimit = 5;
+            };
+          };
+        };
+      }
+      (lib.mkIf (cfg.theme == "fallout") (mkTheme {
+        name = "fallout";
+        theme = fallout-grub-theme;
+      }))
+    ];
 }

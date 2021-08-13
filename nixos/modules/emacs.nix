@@ -1,10 +1,8 @@
 { lib, pkgs, ... }:
 
 let
-  inherit (pkgs) emacs-pkgs;
-
-  emacsPackage = lib.pipe emacs-pkgs.emacsPgtk [
-    emacs-pkgs.emacsPackagesNgGen (e:
+  emacsPackage = lib.pipe pkgs.emacsPgtkGcc [
+    pkgs.emacsPackagesNgGen (e:
       e.emacsWithPackages (p: with p; [
         vterm
         emacsql-sqlite

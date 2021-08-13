@@ -11,7 +11,7 @@
     lynx
     chromium
     (firefox-wayland.override {
-    cfg.enableTridactylNative = true;
+      cfg.enableTridactylNative = true;
     })
 
     # Terminals
