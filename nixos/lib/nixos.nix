@@ -5,10 +5,10 @@ let
   mkHost = path:
     lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit lib inputs system; };
+      specialArgs = { inherit system lib inputs; };
       modules = [
         {
-          nixpkgs.pkgs = pkgs;
+          nixpkgs = { inherit pkgs; };
           networking.hostName = lib.mkDefault (lib.removeSuffix ".nix" (baseNameOf path));
         }
         ../configuration.nix
@@ -17,5 +17,5 @@ let
     };
 in
 {
-  mapHosts = lib.my.mapModules mkHost;
+  mapHosts = lib.my.mapDir mkHost;
 }

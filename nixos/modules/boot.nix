@@ -41,13 +41,14 @@ in
           kernelPackages = pkgs.linuxPackages_latest;
 
           loader = {
+            timeout = 1;
             efi.canTouchEfiVariables = true;
 
             grub = {
               enable = true;
               device = "nodev";
               efiSupport = true;
-              configurationLimit = 5;
+              configurationLimit = 2;
             };
           };
         };

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let cfg = config.modules.laptop;
 in
@@ -14,22 +14,31 @@ in
 
   config = lib.mkIf cfg.enable {
     services = {
+      logind.extraConfig = ''
+        HandlePowerKey=hibernate
+      '';
+
       upower.enable = true;
       thermald.enable = true;
-      tlp = {
-        enable = true;
 
-        settings = {
-          CPU_SCALING_GOVERNOR_ON_AC = "performance";
-          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-        };
-      };
+      auto-cpufreq.enable = false;
+
+      # TODO: Test if this has a negative impact on performance
+      # tlp = {
+      #   enable = true;
+      #   settings = {
+      #     CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      #     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      #   };
+      # };
 
       blueman.enable = true;
+    };
 
-      logind.extraConfig = ''
-        HandlePowerKey=suspend
-      '';
+    home._ = {
+      services = {
+        blueman-applet.enable = true;
+      };
     };
 
     programs = {
@@ -37,7 +46,7 @@ in
     };
 
     user.extraGroups = [
-      # To use 'light' the user must be in the 'video' group
+      # 'light' requires the user to be in the 'video' group
       "video"
     ];
   };

@@ -2,22 +2,24 @@
 
 {
   services = {
-    xserver.desktopManager.gnome.enable = true;
+    xserver = {
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
 
-    gnome.sushi.enable = true;
     power-profiles-daemon.enable = false;
-  };
 
-  programs = {
-    dconf.enable = true;
+    gnome = {
+      sushi.enable = true;
+      games.enable = true;
+    };
   };
 
   user.packages = with pkgs; [
     gnome.gnome-tweaks
-    gnomeExtensions.remove-dropdown-arrows
     gnomeExtensions.system-monitor
     gnomeExtensions.appindicator
     gnomeExtensions.gsconnect
-    gnomeExtensions.impatience
+    gnomeExtensions.pop-shell
   ];
 }

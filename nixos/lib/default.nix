@@ -2,13 +2,13 @@
 
 let
   inherit (lib) makeExtensible attrValues foldr;
-  inherit (modules) mapModules;
+  inherit (modules) mapDir;
 
   modules = import ./modules.nix { inherit lib; };
 
   lib' = makeExtensible (self: with self;
     let go = file: import file { inherit lib pkgs inputs; };
-    in mapModules go ./.
+    in mapDir go ./.
   );
 in
 lib'.extend (final: prev:

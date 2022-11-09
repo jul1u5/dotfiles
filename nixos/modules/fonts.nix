@@ -7,6 +7,8 @@ let
 in
 {
   fonts = {
+    fontDir.enable = true;
+
     fonts = lib.attrValues {
       inherit nerdfonts;
 
@@ -14,12 +16,16 @@ in
         corefonts
         dejavu_fonts
         helvetica-neue-lt-std
-
         manrope
         overpass
-        symbola
+        noto-fonts
+        noto-fonts-cjk
 
+        julia-mono
         fira-code-symbols
+        mononoki
+        symbola
+        font-awesome
 
         twitter-color-emoji
         ;
@@ -29,13 +35,14 @@ in
       defaultFonts = {
         sansSerif = [
           "Overpass"
-          "JoyPixels"
+          "Twitter Color Emoji"
         ];
         monospace = [
           "JetBrainsMono Nerd Font"
+          "JuliaMono"
           "FiraCode Nerd Font"
           "Fira Code Symbol"
-          "DejaVu Serif"
+          "DejaVu Sans Mono"
         ];
         emoji = [
           "Twitter Color Emoji"
@@ -44,8 +51,8 @@ in
 
       # XeTeX chokes if fontconfig returns WOFF fonts.
       # See:
-      #   - XeTeX issue https://sourceforge.net/p/xetex/bugs/139/
-      #   - fontconfig issue https://gitlab.freedesktop.org/fontconfig/fontconfig/-/issues/92
+      #   - XeTeX issue: https://sourceforge.net/p/xetex/bugs/139/
+      #   - fontconfig issue: https://gitlab.freedesktop.org/fontconfig/fontconfig/-/issues/92
       localConf = ''
         <fontconfig>
           <selectfont>
@@ -57,4 +64,8 @@ in
       '';
     };
   };
+
+  user.packages = with pkgs; [
+    font-manager
+  ];
 }

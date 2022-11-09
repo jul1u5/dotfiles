@@ -4,12 +4,22 @@ let
   mapAttrs'' = f: set:
     lib.pipe (lib.attrNames set) [
       (map (attr: f attr set.${attr}))
-      (lib.filter (x: x != null))
+      (lib.remove null)
       lib.listToAttrs
     ];
 in
 rec {
-  mapModules = f: dir:
+  mkLink = src: dest: ''
+    [ -L "${dest}" ] && $DRY_RUN_CMD rm $VERBOSE_ARG "${dest}"
+    $DRY_RUN_CMD ln -sf $VERBOSE_ARG "${src}" "${dest}"
+  '';
+
+  mkCopy = src: dest: ''
+    [ -e "${dest}" ] && $DRY_RUN_CMD rm -rf $VERBOSE_ARG "${dest}"
+    $DRY_RUN_CMD install -D $VERBOSE_ARG "${src}" "${dest}"
+  '';
+
+  mapDir = f: dir:
     let
       go = file: type:
         let path = "${toString dir}/${file}"; in
@@ -31,37 +41,4 @@ rec {
         else null;
     in
     mapAttrs'' go (builtins.readDir dir);
-
-  mapModulesRec = f: dir:
-    let
-      go = file: type:
-        let path = "${toString dir}/${file}"; in
-
-        if lib.hasPrefix "_" file
-        then null
-
-        else if type == "directory"
-        then lib.nameValuePair file (mapModulesRec f path)
-
-        else if
-          type == "regular" &&
-          file != "default.nix" &&
-          lib.hasSuffix ".nix" file
-        then lib.nameValuePair (lib.removeSuffix ".nix" file) (f path)
-
-        else null;
-    in
-    mapAttrs'' go (builtins.readDir dir);
-
-  mapModulesRec' = f: dir:
-    let
-      files = lib.attrValues (mapModules lib.id dir);
-      dirs = lib.pipe (builtins.readDir dir) [
-        (lib.filterAttrs (name: type: type == "directory" && !(lib.hasPrefix "_" name)))
-        (lib.mapAttrsToList (name: _: "${toString dir}/${name}"))
-        (map (mapModulesRec' lib.id))
-        lib.concatLists
-      ];
-    in
-    map f (files ++ dirs);
 }

@@ -4,12 +4,16 @@
 
 [alias]
 	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+	dft = difftool
 
 [commit]
 	gpgsign = true
 
 [pull]
 	rebase = true
+
+[merge]
+	conflictstyle = diff3
 
 [rebase]
 	autostash = true
@@ -22,7 +26,18 @@
 
 [core]
 	autocrlf = input
-    pager = delta
+
+[pager]
+    difftool = true
+
+[diff]
+	tool = difftastic
+
+[difftool]
+	prompt = false
+
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
 
 [interactive]
     diffFilter = delta --color-only

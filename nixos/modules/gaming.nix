@@ -10,8 +10,16 @@
   };
 
   user.packages = with pkgs; [
+    protonup
     lutris
     legendary-gl
-    wineWowPackages.stable
+    heroic
+    # Needed by HeroicBashLauncher
+    gnome.zenity
+
+    mangohud
+    gamemode
+
+    minecraft
   ];
 }

@@ -4,12 +4,7 @@
   services = {
     printing = {
       enable = true;
-      drivers = [ pkgs.epson-escpr ];
-    };
-
-    avahi = {
-      enable = true;
-      nssmdns = true;
+      drivers = [ pkgs.my.epson-201401w ];
     };
   };
 }

@@ -1,6 +1,9 @@
 set smoothscroll true
 
+unbind s
 bind yd tabduplicate
+
+bind ;H hint -F e => e.dispatchEvent(new MouseEvent('mouseover', {}))
 
 bind --mode=normal <C-\> mode ignore
 bind --mode=ignore <C-\> mode normal
@@ -9,5 +12,12 @@ blacklistadd calendar.google.com
 blacklistadd docs.google.com
 blacklistadd drive.google.com
 blacklistadd mail.google.com
-blacklistadd youtube.com
+blacklistadd colab.research.google.com
+
+blacklistadd netflix.com
 blacklistadd overleaf.com
+blacklistadd twitch.tv
+blacklistadd youtube.com
+blacklistadd penrose.cs.cmu.edu
+blacklistadd www.typrx.com
+blacklistadd saltis.synology.me

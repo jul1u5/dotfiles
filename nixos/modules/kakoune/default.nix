@@ -1,31 +1,6 @@
-{ pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  kak-config = {
-    programs.kakoune = {
-      enable = true;
-
-      config = {
-        colorScheme = "gruvbox";
-
-        numberLines = {
-          enable = true;
-          relative = true;
-        };
-
-        showWhitespace = {
-          enable = true;
-          lineFeed = null;
-        };
-
-        ui = {
-          enableMouse = true;
-          assistant = "none";
-        };
-      };
-    };
-  };
-
   kak-modules = lib.attrValues {
     clipboard = {
       programs.kakoune = {
@@ -90,5 +65,30 @@ let
   };
 in
 {
-  home = lib.mkMerge ([kak-config] ++ kak-modules);
+  home._ = lib.mkMerge (
+    [{
+      programs.kakoune = {
+        enable = true;
+
+        config = {
+          colorScheme = "gruvbox";
+
+          numberLines = {
+            enable = true;
+            relative = true;
+          };
+
+          showWhitespace = {
+            enable = true;
+            lineFeed = null;
+          };
+
+          ui = {
+            enableMouse = true;
+            assistant = "none";
+          };
+        };
+      };
+    }] ++ kak-modules
+  );
 }

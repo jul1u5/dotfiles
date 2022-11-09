@@ -4,7 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ("${modulesPath}/installer/scan/not-detected.nix") ];
+  imports = [ "${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
@@ -26,5 +26,5 @@
     [{ device = "/dev/disk/by-uuid/aa7aba94-ef0d-49e1-a34b-b9074f90b3ce"; }];
 
   nix.maxJobs = lib.mkDefault 8;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 }

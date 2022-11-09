@@ -1,0 +1,14 @@
+final: prev:
+{
+  geoclue2 = prev.geoclue2.overrideAttrs (old: rec {
+    version = "2.6.0";
+
+    src = final.fetchFromGitLab {
+      domain = "gitlab.freedesktop.org";
+      owner = old.pname;
+      repo = old.pname;
+      rev = version;
+      sha256 = "sha256-TbuO9wpyjtvyvqaCryaTOunR0hVVlJuqENWQQpcMcz4=";
+    };
+  });
+}

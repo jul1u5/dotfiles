@@ -2,7 +2,7 @@
 @define-color blue_dark #142139;
 
 @define-color green #48D597;
-@define-color green_dark #14312B;
+@define-color green_dark #102422;
 
 @define-color yellow #F5CF65;
 @define-color yellow_dark #2E3024;
@@ -11,7 +11,7 @@
 @define-color red_dark #2C2128;
 
 
-@define-color bg_color #0B1418;
+@define-color bg_color #080F11;
 
 @define-color text_color #ffffff;
 @define-color text_bg_color #969A9C;
@@ -30,7 +30,6 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  margin: 0;
   padding: 0;
   font-family: monospace;
 }
@@ -42,7 +41,7 @@
 }
 
 #workspaces button {
-  padding: 0 4px;
+  padding: 0 20px;
   background: transparent;
   color: @text_color;
 }
@@ -66,7 +65,8 @@
 #network,
 #pulseaudio,
 #temperature,
-#scratchpad,
+#custom-scratchpad,
+#custom-spotify,
 #tray {
   color: @text_bg_color;
   padding: 0 10px;

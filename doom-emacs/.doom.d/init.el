@@ -4,8 +4,8 @@
 ;; in. Remember to run 'doom sync' after modifying it!
 
 ;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;      documentation. There you'll find a "Module Index" link where you'll find
-;;      a comprehensive list of Doom's modules and what flags they support.
+;;      documentation. There you'll find a link to Doom's Module Index where all
+;;      of our modules are listed, including what flags they support.
 
 ;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 ;;      'C-c c k' for non-vim users) to view its documentation. This works on
@@ -15,6 +15,7 @@
 ;;      directory (for easy access to its source code).
 
 (doom! :input
+       ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
        ;;japanese
        ;;layout            ; auie,ctsrnm is the superior home row
@@ -24,8 +25,9 @@
         +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       (ivy              ; a search engine for love and life
-        +icons)
+       ;;(ivy              ; a search engine for love and life
+       ;; +icons)
+       vertico           ; the search engine of the future
 
        :ui
        deft              ; notational velocity for Emacs
@@ -33,14 +35,13 @@
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji
-        +github          ; :smile:
-        +unicode)        ; 🙂
+        +github)         ; :smile:
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
        info-colors
        ligatures         ; ligatures and symbols to make your code pretty again
-        ;+extra)
+                                        ;+extra)
        ;;minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -67,8 +68,7 @@
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
-       (parinfer         ; turn lisp into python, sort of
-        +rust)
+       parinfer          ; turn lisp into python, sort of
        rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
        ;;word-wrap         ; soft wrapping with language-aware indent
@@ -87,14 +87,14 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+                                        ; vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax            ; tasing you for every semicolon you forget
        (spell            ; tasing you for misspelling mispelling
         +flyspell
         +aspell)
-       ;;grammar           ; tasing grammar mistake every you make
+       grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
@@ -120,6 +120,7 @@
        taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
+       tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
@@ -127,7 +128,9 @@
        tty               ; improve the terminal Emacs experience
 
        :lang
-       agda              ; types of types of types of types...
+       (agda             ; types of types of types of types...
+        +local
+        +tree-sitter)
        ;;beancount         ; mind the GAAP
        (cc +lsp)         ; C > C++ == 1
        ;;clojure           ; java with a lisp
@@ -147,15 +150,16 @@
        ;;factor
        ;;faust             ; dsp, but you get to keep your soul
        fsharp            ; ML stands for Microsoft's Language
-       ;;fstar             ; (dependent) types and (monadic) effects and Z3
+       fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;(go +lsp)         ; the hipster dialect
+       ;;(graphql +lsp)    ; Give queries a REST
        (haskell          ; a language that's lazier than I am
         +lsp)
        ;;hy                ; readability of scheme w/ speed of python
        idris             ; a language you can depend on
        json              ; At least it ain't XML
-       (java +meghanada) ; the poster child for carpal tunnel syndrome
+       (java +lsp)       ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        (julia            ; a better, faster MATLAB
         +lsp)
@@ -176,7 +180,7 @@
         +pandoc
         +jupyter
         +pretty
-        +roam)
+        +roam2)
        ;;org-super-agenda
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -185,7 +189,9 @@
         +lsp
         +pyright)
        ;;qt                ; the 'cutest' gui framework ever
-       racket            ; a DSL for DSLs
+       (racket           ; a DSL for DSLs
+        +lsp
+        +xp)
        ;;raku              ; the artist formerly known as perl6
        rest              ; Emacs as a REST client
        rst               ; ReST in peace
@@ -199,16 +205,16 @@
        (sh               ; she sells {ba,z,fi}sh shells on the C xor
         +lsp)
        ;;sml
-       solidity          ; do you need a blockchain? No.
+       ;;solidity          ; do you need a blockchain? No.
        swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        tla
        web               ; the tubes
        yaml              ; JSON, but readable
-       ;;zig             ; C, but simpler
+       zig               ; C, but simpler
 
        :email
-       (mu4e +gmail)
+       (mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 
@@ -224,8 +230,8 @@
        ;;literate
        (default +bindings +smartparens))
 
-; Fix evil movement when line wrapping is enabled
-; Copied from https://github.com/hlissner/doom-emacs/issues/401#issuecomment-588502773
+                                        ; Fix evil movement when line wrapping is enabled
+                                        ; Copied from https://github.com/hlissner/doom-emacs/issues/401#issuecomment-588502773
 (use-package-hook! evil
   :pre-init
   (setq evil-respect-visual-line-mode t)

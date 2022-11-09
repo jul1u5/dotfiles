@@ -1,7 +1,13 @@
 { pkgs, ... }:
 
 {
-  documentation.dev.enable = true;
+  documentation = {
+    dev.enable = true;
 
-  user.packages = with pkgs; [ manpages ];
+    # Generate cache for `apropos`, `whatis` and `man -k`.
+    # See: https://nixos.wiki/wiki/Apropos
+    man.generateCaches = true;
+  };
+
+  user.packages = with pkgs; [ man-pages ];
 }

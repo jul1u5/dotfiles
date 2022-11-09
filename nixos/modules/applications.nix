@@ -1,18 +1,33 @@
 { pkgs, ... }:
 
 {
-  environment.variables = {
+  environment.sessionVariables = {
     BROWSER = "firefox";
+    # Maybe required for electron apps like discord?
+    # DEFAULT_BROWSER = "firefox";
     MOZ_DBUS_REMOTE = "1";
+  };
+
+  services = {
+    flatpak.enable = true;
   };
 
   user.packages = with pkgs; [
     # Browsers
-    lynx
-    chromium
     (firefox-wayland.override {
-      cfg.enableTridactylNative = true;
+      cfg = {
+        enableGnomeExtensions = true;
+        enableTridactylNative = true;
+      };
     })
+    chromium
+    google-chrome
+    lynx
+    vivaldi
+
+    # File Browsers
+    gnome3.nautilus
+    pcmanfm
 
     # Terminals
     alacritty
@@ -20,27 +35,30 @@
     kitty
 
     # Development
-    vimHugeX
-    androidStudioPackages.canary
-    octave
+    # vimHugeX
+    android-studio
     postman
 
     # Graphics
+    blender
     gimp
     gthumb
-    imv
-    inkscape
+    unstable.inkscape
     krita
 
     # Office
     libreoffice
+    obsidian
     zotero
 
-    # Video
+    # Media
+    imv
     mpv
+    spotify
+    spot
 
     # Instant Messengers
-    unstable.discord
+    (discord.override { nss = nss_latest; })
     element-desktop
     signal-desktop
     slack
@@ -48,13 +66,14 @@
     zoom-us
 
     # Misc
-    blender
-    gnome3.nautilus
+    (assert authy.version == "2.1.0"; unstable.authy) # Stable authy uses electron which is EOL
+    bottles
+    ghidra-bin
     gparted
     psensor
     remmina
-    spotify
     transmission-gtk
+    variety
     zathura
   ];
 }

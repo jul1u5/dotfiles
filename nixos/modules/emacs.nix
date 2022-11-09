@@ -1,28 +1,17 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  emacsPackage = lib.pipe pkgs.emacsPgtkGcc [
-    pkgs.emacsPackagesNgGen (e:
-      e.emacsWithPackages (p: with p; [
-        vterm
-        emacsql-sqlite
-        pdf-tools
-      ])
-    )
-  ];
+  emacsPackage = (pkgs.emacsPackagesFor pkgs.emacs28NativeComp).emacsWithPackages (p: with p; [
+    vterm
+    emacsql-sqlite
+    pdf-tools
+  ]);
 in
 {
-  services.emacs = {
-    enable = true;
-    package = emacsPackage;
-  };
-
   fonts.fonts = with pkgs; [ emacs-all-the-icons-fonts ];
 
-  user.packages = with pkgs; [
-    # TODO: wrap emacs with its dependencies
-    emacsPackage
-
+  # TODO: wrap emacs with its dependencies
+  user.packages = [ emacsPackage ] ++ (with pkgs; [
     parinfer-rust
 
     # spell
@@ -50,5 +39,5 @@ in
     # pdf-tools
     poppler
     texlive.combined.scheme-basic
-  ];
+  ]);
 }

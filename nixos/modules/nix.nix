@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ lib, inputs, pkgs, ... }:
 
 {
   environment.variables = {
@@ -6,20 +6,23 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    # package = pkgs.nixFlakes;
     extraOptions = ''
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command flakes
     '';
 
     trustedUsers = [ "root" "@wheel" ];
 
-    nixPath = [
-      "nixpkgs=${pkgs.path}"
-      "home-manager=${inputs.home-manager}"
-      "nixos-config=/etc/current-configuration/compat/nixos"
-    ];
+    nixPath = lib.mapAttrsToList (name: path: "${name}=${path}") {
+      nixpkgs = pkgs.path;
+      unstable = inputs.nixpkgs-unstable;
+      inherit (inputs) home-manager;
+      nixos-config = "/etc/current-configuration/compat/nixos";
+      repl = "/etc/current-configuration/repl.nix";
+    };
 
     registry = {
+      system.flake = inputs.self;
       nixpkgs.flake = inputs.nixpkgs;
       unstable.flake = inputs.nixpkgs-unstable;
     };

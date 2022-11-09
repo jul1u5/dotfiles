@@ -3,8 +3,6 @@
 {
   programs = {
     neovim.defaultEditor = true;
-
-    thefuck.enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -29,12 +27,11 @@
     unrar
 
     # Security
-    bitwarden-cli
     gnupg
     pass
 
     # System Monitor
-    bottom
+    btop
     htop
     procs
 
@@ -44,9 +41,10 @@
 
     # Git
     delta
+    difftastic
     gh
     gitAndTools.gitFull
-    gnome.libsecret
+    libsecret
 
     # File explorer
     ranger
@@ -57,14 +55,14 @@
     cachix
     manix
     niv
-    nix-index
+    unstable.nix-output-monitor
     nix-prefetch-git
+    nix-update
+    nixos-shell
     nixpkgs-fmt
     patchelf
-
-    # Filesystem
-    nfs-utils
-    sshfs
+    statix
+    deadnix
 
     # Fun
     cmatrix
@@ -76,15 +74,18 @@
 
     # Tools
     appimage-run
-    dragon-drop
+    dig
+    entr
+    exiftool
+    fx
     fzf
     gdu
     graphviz
     hexyl
     hyperfine
     inotify-tools
+    jc
     jq
-    nixos-shell
     pandoc
     radare2
     rlwrap
@@ -95,12 +96,13 @@
     tmux
     translate-shell
     trash-cli
+    xdragon
     youtube-dl
     zoxide
 
     # Misc
     glxinfo
-    gnome.librsvg
+    librsvg
     imagemagick
     inxi
     libfsm
@@ -110,6 +112,7 @@
     moreutils
     pciutils
     strace
+    ltrace
     usbutils
     lsof
   ];
