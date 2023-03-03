@@ -1,25 +1,27 @@
-export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
-export ZSH=~/.oh-my-zsh
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
+export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 
-fpath+=~/.zfunc
+# export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
+export ZSH=$XDG_DATA_HOME/oh-my-zsh
+
+# fpath+=~/.zfunc
 
 if [[ ! -d $ZSH ]]; then
   git clone https://github.com/robbyrussell/oh-my-zsh.git $ZSH
 fi
 
-if [[ ! -d ~/.zsh-autopair ]]; then
-  git clone https://github.com/hlissner/zsh-autopair ~/.zsh-autopair
-fi
-
-source ~/.zsh-autopair/autopair.zsh
-autopair-init
-
 ZSH_THEME=""
 RPROMPT=""
 
-HISTFILE=~/.histfile
+HISTFILE=$XDG_CACHE_HOME/zsh/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
+if [[ ! -d $(dirname $HISTFILE) ]]; then
+  mkdir -p $(dirname $HISTFILE)
+fi
 
 set -o emacs
 
@@ -80,7 +82,7 @@ source $ZSH/oh-my-zsh.sh
 
 autoload -Uz compinit
 
-for dump in ~/.zcompdump(N.mh+24); do
+for dump in $XDG_CACHE_HOME/.zcompdump(N.mh+24); do
   compinit -i
 done
 
@@ -120,4 +122,3 @@ source "$(which nix-locate | xargs readlink | xargs dirname)/../etc/profile.d/co
 if [ -f ~/.aliases.sh ]; then
   source ~/.aliases.sh
 fi
-

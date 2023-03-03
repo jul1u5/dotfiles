@@ -1,7 +1,0 @@
-{ ... }:
-
-{
-  services = {
-    locate.enable = true;
-  };
-}

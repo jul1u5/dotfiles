@@ -1,0 +1,22 @@
+{ pkgs, ... }:
+
+{
+  home._ = home: {
+    programs.neovim = {
+      enable = true;
+      vimAlias = true;
+
+      withNodeJs = true;
+      coc.enable = true;
+
+      plugins = [
+        {
+          plugin = pkgs.vimPlugins.cornelis;
+          config = "let g:cornelis_use_global_binary = 1";
+        }
+      ];
+
+      extraPackages = [ pkgs.cornelis ];
+    };
+  };
+}

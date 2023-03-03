@@ -1,64 +1,67 @@
 [user]
-	email = marozas.julius@gmail.com
-	name = Julius Marozas
+email = marozas.julius@gmail.com
+name = Julius Marozas
 
 [alias]
-	tree = log --graph --decorate --pretty=oneline --abbrev-commit
-	dft = difftool
+tree = log --graph --decorate --pretty=oneline --abbrev-commit
+dft = difftool
 
 [commit]
-	gpgsign = true
+gpgsign = true
 
 [pull]
-	rebase = true
+ff = only
 
 [merge]
-	conflictstyle = diff3
+conflictstyle = diff3
 
 [rebase]
-	autostash = true
+autostash = true
+
+[submodule]
+recurse = true
 
 [credential]
-	helper = libsecret
+helper = libsecret
 
 [color]
-	ui = auto
+ui = auto
 
 [core]
-	autocrlf = input
+autocrlf = input
 
 [pager]
-    difftool = true
+difftool = true
 
 [diff]
-	tool = difftastic
+tool = difftastic
 
 [difftool]
-	prompt = false
+prompt = false
 
 [difftool "difftastic"]
-	cmd = difft "$LOCAL" "$REMOTE"
+cmd = difft "$LOCAL" "$REMOTE"
 
 [interactive]
-    diffFilter = delta --color-only
+diffFilter = delta --color-only
 
 [delta]
-    features = side-by-side line-numbers decorations
-    whitespace-error-style = 22 reverse
+features = side-by-side line-numbers decorations
+whitespace-error-style = 22 reverse
 
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
+commit-decoration-style = bold yellow box ul
+file-style = bold yellow ul
+file-decoration-style = none
 
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
 
 [init]
-	defaultBranch = main
+defaultBranch = main
 
 [github]
-	user = jul1u5
+user = jul1u5
