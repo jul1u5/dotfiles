@@ -33,8 +33,6 @@ in
         boot = {
           kernelPackages = pkgs.linuxPackages_latest;
 
-          tmpOnTmpfs = true;
-
           loader = {
             timeout = 1;
             efi.canTouchEfiVariables = true;

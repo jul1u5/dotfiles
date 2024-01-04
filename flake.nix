@@ -1,13 +1,18 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
 
     nix-alien = {
@@ -17,7 +22,7 @@
 
     nur.url = "github:nix-community/NUR";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "github:hyprwm/Hyprland";
 
     spicetify-nix.url = "github:the-argus/spicetify-nix";
 
@@ -61,7 +66,6 @@
     pkgs = mkPkgs nixpkgs [
       # inputs.nur.overlay
       # inputs.emacs-overlay.overlay
-      inputs.nix-alien.overlay
     ];
 
     lib = nixpkgs.lib.extend (final: _prev: {
@@ -78,6 +82,7 @@
       pop-launcher = pkgs.callPackage ./packages/pop-launcher {};
       rot8 = pkgs.callPackage ./packages/rot8 {};
       tlpui = pkgs.python3Packages.callPackage ./packages/tlpui {};
+      typst-lt = pkgs.python3Packages.callPackage ./packages/typst-lt {};
     };
   in {
     inherit lib;
@@ -90,9 +95,9 @@
       lib.mapAttrs (_name: import) (lib.my.readModules ./overlays)
       // {
         default = _final: _prev: {
-          unstable = mkPkgs inputs.nixpkgs-unstable [];
+          unstable = mkPkgs inputs.nixos-unstable [];
           my = my-packages;
-          hyprland = inputs.hyprland.packages.${system}.default;
+          # hyprland = inputs.hyprland.packages.${system}.default;
         };
       };
 
@@ -107,25 +112,26 @@
       };
     };
 
-    devShells.${system}.default = with pkgs.unstable; mkShell {
-      packages = [
-        ghc
-        lua
+    devShells.${system}.default = with pkgs.unstable;
+      mkShell {
+        packages = [
+          ghc
+          lua
 
-        haskell-language-server
-        sumneko-lua-language-server
-      ];
-    };
+          # haskell-language-server
+          lua-language-server
+        ];
+      };
   };
 
   nixConfig = {
     extra-substituters = [
       "https://devenv.cachix.org"
-      "https://hyprland.cachix.org"
+      # "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 }

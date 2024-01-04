@@ -20,7 +20,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font         (font-spec :family "JetBrainsMono Nerd Font" :size 12)
-      doom-unicode-font (font-spec :family "JuliaMono")
+      doom-symbol-font (font-spec :family "JuliaMono")
       use-default-font-for-symbols nil)
 ;; doom-big-font     (font-spec :family "JetBrainsMono Nerd Font" :size 18))
 
@@ -222,3 +222,6 @@
       "M-p"           #'*helpful-previous
       :n ">"          #'*helpful-next
       :n "<"          #'*helpful-previous)
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                "/home/julius/code/Chalmers/RA/agda-meta-sharing/./src/data/emacs-mode/agda2.el"))

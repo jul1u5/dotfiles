@@ -55,6 +55,7 @@
 in {
   imports = [
     ./waybar
+    ./swaync
   ];
 
   programs = {
@@ -83,8 +84,11 @@ in {
     gsimplecal
     clipman
     wl-clipboard
+    wl-mirror
     wf-recorder
     wofi
+    wofi-emoji
+    wtype
 
     # For screen duplication
     wayvnc
@@ -93,6 +97,7 @@ in {
 
   xdg.portal = {
     enable = true;
+    xdgOpenUsePortal = true;
     # gtkUsePortal = true;
     wlr.enable = true;
   };
@@ -114,81 +119,33 @@ in {
     xsession.preferStatusNotifierItems = true;
 
     programs = {
-      eww = {
-        enable = true;
-        configDir = ./eww;
-        package = pkgs.unstable.eww-wayland;
-      };
-
-      mako = lib.mkMerge [
-        {
-          enable = true;
-          icons = true;
-
-          width = 400;
-          height = 300;
-          borderSize = 1;
-
-          defaultTimeout = 2000;
-        }
-        (with colors; {
-          backgroundColor = accent.bg;
-          borderColor = accent.bg;
-          textColor = accent.fg;
-          progressColor = accent.fg;
-
-          extraConfig = lib.generators.toINI {} {
-            "mode=do-not-disturb" = {
-              invisible = 1;
-            };
-
-            "urgency=normal" = with yellow; {
-              default-timeout = 5000;
-
-              background-color = bg;
-              border-color = bg;
-              text-color = fg;
-              progress-color = fg;
-            };
-
-            "urgency=critical" = with red; {
-              default-timeout = 0;
-
-              background-color = bg;
-              border-color = bg;
-              text-color = fg;
-              progress-color = fg;
-            };
-
-            "category=system" = with blue; {
-              # Display notification above fullscreen windows
-              layer = "overlay";
-              anchor = "bottom-center";
-
-              default-timeout = 1000;
-
-              background-color = bg;
-              border-color = bg;
-              text-color = fg;
-              progress-color = fg;
-            };
-
-            "category=mpd" = {
-              group-by = "category";
-              default-timeout = 1000;
-            };
-          };
-        })
-      ];
+      #   eww = {
+      #     enable = true;
+      #     configDir = ./eww;
+      #     package = pkgs.unstable.eww-wayland;
+      #   };
     };
 
     services = {
       kanshi.enable = true;
 
+      avizo = {
+        enable = true;
+        settings = {
+          default = {
+            time = 1.0;
+            y-offset = 0.5;
+            fade-in = 0.1;
+            fade-out = 0.2;
+            padding = 10;
+          };
+        };
+      };
+
       network-manager-applet.enable = true;
       udiskie.enable = true;
       gammastep = {
-        enable = true;
+        # enable = true;
         tray = true;
         provider = "geoclue2";
         temperature.day = 6500;
@@ -204,7 +161,7 @@ in {
       sway-cfg = home.config.wayland.windowManager.sway;
     in {
       enable = true;
-      systemdIntegration = true;
+      systemd.enable = true;
 
       wrapperFeatures = {
         gtk = true;
@@ -248,6 +205,8 @@ in {
 
         exec systemd-cat -t swayrd \
           swayrd
+
+        # exec fcitx5 -d --replace
 
         workspace 1
         exec ${sway-cfg.config.terminal} btop
@@ -322,37 +281,6 @@ in {
 
           pictures = "\${XDG_PICTURES_DIR:-$HOME/Pictures}";
 
-          notify-volume = pkgs.writeShellScript "notify-volume.sh" ''
-            volume=$(pamixer --get-volume)
-            if [ "$volume" -eq 0 ]; then
-              icon=🔈
-            elif [ "$volume" -le 50 ]; then
-              icon=🔉
-            else
-              icon=🔊
-            fi
-
-            notify-send "$icon" -u low -c system \
-              -h string:x-dunst-stack-tag:system \
-              -h int:value:$volume
-          '';
-          notify-mute = pkgs.writeShellScript "notify-mute.sh" ''
-            notify-send '🔇' -u low -c system \
-              -h string:x-dunst-stack-tag:system
-          '';
-          notify-brightness = pkgs.writeShellScript "notify-brightness.sh" ''
-            brightness=$(light | cut -d'.' -f1)
-            if [ $brightness -le 50 ]; then
-              icon=🔅
-            else
-              icon=🔆
-            fi
-
-            notify-send "$icon" -u low -c system \
-              -h string:x-dunst-stack-tag:system \
-              -h int:value:$brightness
-          '';
-
           swap-workspaces = pkgs.writeShellScript "swap-workspaces.sh" ''
             workspaces=$(swaymsg -t get_workspaces)
             focused_ws=$(echo -E "$workspaces" | jq '.[] | select(.focused) | .name')
@@ -417,6 +345,7 @@ in {
               "${mod}+p" = "exec swayr switch-window";
 
               "${mod}+Shift+v" = "exec clipman pick --tool wofi";
+              "${mod}+period" = "exec wofi-emoji";
 
               "XF86AudioPlay" = "exec playerctl play-pause";
               "--locked XF86AudioNext" = "exec playerctl next";
@@ -432,30 +361,21 @@ in {
               "Shift+Print" = "exec grimshot copy output";
 
               "${mod}+Print" = ''
-                exec grimshot save area ${pictures}/$(date +%Y-%m-%d_%H-%m-%s).jpg
+                exec grimshot save area ${pictures}/$(date +%Y-%m-%d_%H-%m-%s).png
               '';
               "${mod}+Shift+Print" = ''
-                exec grimshot save output ${pictures}/$(date +%Y-%m-%d_%H-%m-%s).jpg
+                exec grimshot save output ${pictures}/$(date +%Y-%m-%d_%H-%m-%s).png
               '';
 
-              "--locked XF86AudioRaiseVolume" = ''
-                exec pamixer -ui 2 && ${notify-volume}
-              '';
-              "--locked XF86AudioLowerVolume" = ''
-                exec pamixer -ud 2 && ${notify-volume}
-              '';
-              "--locked XF86AudioMute" = ''
-                exec pamixer --toggle-mute --get-mute \
-                  && ${notify-mute} \
-                  || ${notify-volume}
-              '';
+              "--locked XF86AudioRaiseVolume" = "exec volumectl -u up";
+              "--locked XF86AudioLowerVolume" = "exec volumectl -u down";
+              "--locked XF86AudioMute" = "exec volumectl toggle-mute";
+              "--locked XF86AudioMicMute" = "exec volumectl -m toggle-mute";
 
-              "--locked XF86MonBrightnessUp" = ''
-                exec light -A 5 && ${notify-brightness}
-              '';
-              "--locked XF86MonBrightnessDown" = ''
-                exec light -U 5 && ${notify-brightness}
-              '';
+              "--locked XF86MonBrightnessUp" = "exec lightctl up";
+              "--locked XF86MonBrightnessDown" = "exec lightctl down";
+
+              "${mod}+n" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t";
             }
             // workspaceBinds);
 

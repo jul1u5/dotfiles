@@ -1,14 +1,19 @@
-{ config, options, lib, inputs, ... }:
-
 {
+  config,
+  options,
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  options = with lib; with types; {
+  options = with lib;
+  with types; {
     user = mkOption {
       type = attrs;
-      default = { };
+      default = {};
       description = ''
         An alias for passing option to the default user via the option
         <option>users.user.<name></option>.
@@ -18,17 +23,17 @@
     home = {
       file = mkOption {
         type = attrs;
-        default = { };
+        default = {};
         description = "Files managed by home-manager's <option>home.file</option>";
       };
       configFile = mkOption {
         type = attrs;
-        default = { };
+        default = {};
         description = "Files managed by home-manager's <option>xdg.configFile</option>";
       };
       _ = mkOption {
         type = attrs;
-        default = { };
+        default = {};
         description = "For passing arbitrary configuration to user's home-manager config";
       };
     };

@@ -1,18 +1,20 @@
-{ lib, pkgs, ... }:
-
-let
-  nerdfonts = pkgs.nerdfonts.override {
-    fonts = [ "FiraCode" "JetBrainsMono" ];
-  };
-in
 {
+  lib,
+  pkgs,
+  ...
+}: let
+  nerdfonts = pkgs.nerdfonts.override {
+    fonts = ["FiraCode" "JetBrainsMono" "NerdFontsSymbolsOnly"];
+  };
+in {
   fonts = {
     fontDir.enable = true;
 
-    fonts = lib.attrValues {
+    packages = lib.attrValues {
       inherit nerdfonts;
 
-      inherit (pkgs)
+      inherit
+        (pkgs)
         corefonts
         dejavu_fonts
         helvetica-neue-lt-std
@@ -21,14 +23,12 @@ in
         noto-fonts
         noto-fonts-cjk
         fira
-
         julia-mono
         fira-mono
         fira-code-symbols
         mononoki
         symbola
         font-awesome
-
         twitter-color-emoji
         ;
     };

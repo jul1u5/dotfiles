@@ -1,6 +1,4 @@
-_:
-
-let
+_: let
   firefox = "firefox.desktop";
 
   ranger = "ranger.desktop";
@@ -25,8 +23,8 @@ let
   transmission = "userapp-transmission-gtk-7K8P90.desktop";
 
   associations = {
-    "application/pdf" = [ evince zathura firefox xournalpp ];
-    "application/postscript" = [ evince zathura ];
+    "application/pdf" = [evince zathura firefox xournalpp];
+    "application/postscript" = [evince zathura];
 
     "application/xhtml+xml" = firefox;
     "application/x-xpinstall" = firefox; # Web Extension installation file
@@ -38,16 +36,17 @@ let
 
     "application/x-ms-dos-executable" = bottles;
 
-    "image/gif" = [ gthumb imv gimp ];
-    "image/jpeg" = [ gthumb imv gimp ];
-    "image/png" = [ gthumb imv gimp ];
-    "image/svg+xml" = [ gthumb imv gimp];
+    "image/gif" = [gthumb imv gimp];
+    "image/jpeg" = [gthumb imv gimp];
+    "image/png" = [gthumb imv gimp];
+    "image/svg+xml" = [gthumb imv gimp];
 
     "video/mp4" = mpv;
     "video/x-matroska" = mpv;
+    "video/x-msvideo" = mpv;
 
-    "inode/directory" = [ nautilus pcmanfm ranger ];
-    "inode/mount-point" = [ nautilus pcmanfm ranger ];
+    "inode/directory" = [nautilus pcmanfm ranger];
+    "inode/mount-point" = [nautilus pcmanfm ranger];
     "inode/x-empty" = nvim;
 
     "text/html" = firefox;
@@ -67,16 +66,21 @@ let
 
     "x-scheme-handler/magnet" = transmission;
 
-    "x-scheme-handler/sms" = gsconnect;
-    "x-scheme-handler/tel" = gsconnect;
+    "x-scheme-handler/sms" = [gsconnect];
+    "x-scheme-handler/tel" = [gsconnect];
+
+    "x-scheme-handler/msteams" = "teams.desktop";
   };
-in
-{
+in {
   home._ = {
-    xdg.mimeApps = {
-      enable = true;
-      associations.added = associations;
-      defaultApplications = associations;
+    xdg = {
+      mimeApps = {
+        enable = true;
+        associations.added = associations;
+        defaultApplications = associations;
+      };
+
+      configFile."mimeapps.list".force = true;
     };
   };
 }

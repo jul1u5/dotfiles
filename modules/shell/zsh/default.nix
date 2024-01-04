@@ -17,7 +17,7 @@
   home._ = home: {
     home.sessionVariables = {
       _ZO_FZF_OPTS =
-        let preview = "${pkgs.exa}/bin/exa -RT -L 2 --icons {2..} | head -200";
+        let preview = "${pkgs.eza}/bin/eza -RT -L 2 --icons {2..} | head -200";
         in "$FZF_DEFAULT_OPTS --no-sort --reverse -1 -0 --preview ${lib.escapeShellArg preview}";
     };
 
@@ -39,7 +39,7 @@
         shellAliases = {
           cat = "bat";
 
-          ls = "exa --binary --git --group-directories-first";
+          ls = "eza --binary --git --group-directories-first";
           ll = "ls --icons -lgh";
           la = "ll -aa";
 
@@ -60,7 +60,7 @@
         initExtra = lib.fileContents ./init.sh;
       };
 
-      exa.enable = true;
+      eza.enable = true;
       bat.enable = true;
       zoxide.enable = true;
       starship.enable = true;

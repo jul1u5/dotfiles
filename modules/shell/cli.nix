@@ -12,7 +12,6 @@
     bat
     binutils
     colordiff
-    exa
     fd
     file
     psmisc
@@ -45,6 +44,7 @@
 
     # Git
     gitAndTools.gitFull
+    git-lfs
     libsecret
     gh
     delta
@@ -65,7 +65,7 @@
     nix-prefetch-git
     nix-update
     nixos-shell
-    nixpkgs-fmt
+    alejandra
     patchelf
     statix
     deadnix
@@ -105,6 +105,7 @@
     trash-cli
     xdragon
     youtube-dl
+    google-cloud-sdk
 
     # Misc
     glxinfo

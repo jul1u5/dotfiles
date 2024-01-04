@@ -23,3 +23,5 @@ blacklistadd www.typrx.com
 blacklistadd saltis.synology.me
 blacklistadd monkeytype.com
 blacklistadd leetcode.com
+blacklistadd godbolt.com
+blacklistadd typst.app/project

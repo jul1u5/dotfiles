@@ -3,7 +3,7 @@
 {
   home._ = {
     programs.zsh = {
-      enableSyntaxHighlighting = lib.mkForce false;
+      syntaxHighlighting.enable = lib.mkForce false;
 
       plugins = [
         {

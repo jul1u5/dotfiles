@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   security = {
     # Enable Trusted Platform Module 2.0
     tpm2.enable = true;
@@ -13,8 +15,8 @@
   };
 
   # Mounts /tmp on RAM
-  boot.tmpOnTmpfs = lib.mkDefault true;
-  boot.cleanTmpDir = lib.mkDefault (!config.boot.tmpOnTmpfs);
+  boot.tmp.useTmpfs = lib.mkDefault true;
+  boot.tmp.cleanOnBoot = lib.mkDefault (!config.boot.tmp.useTmpfs);
 
   # See https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
   # From description:

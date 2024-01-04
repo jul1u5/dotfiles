@@ -8,7 +8,7 @@ local servers = {
   "ccls",
   "gopls",
   "bashls",
-  "sumneko_lua",
+  "lua_ls",
   "html",
   "cssls",
   "emmet_ls",
@@ -40,15 +40,13 @@ local server_configs = {
     },
   },
   elixirls = {
-    cmd = {
-      (function()
-        if vim.fn.executable("elixir-ls") then
-          return vim.fn.exepath("elixir-ls")
-        else
-          return ""
-        end
-      end)(),
-    },
+    cmd = function()
+      if vim.fn.executable("elixir-ls") then
+        return vim.fn.exepath("elixir-ls")
+      else
+        return nil
+      end
+    end,
     dialyzerEnabled = false,
   },
   ltex = {

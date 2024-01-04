@@ -1,21 +1,27 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   environment.sessionVariables = {
     BROWSER = "firefox";
     # Maybe required for electron apps like discord?
     # DEFAULT_BROWSER = "firefox";
     # MOZ_DBUS_REMOTE = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+  };
+
+  home._ = {
+    programs.firefox = {
+      enable = true;
+      enableGnomeExtensions = true;
+      package = pkgs.firefox.override {
+        cfg = {
+          enableTridactylNative = true;
+          enableGnomeExtensions = true;
+        };
+      };
+    };
   };
 
   user.packages = with pkgs; [
     # Browsers
-    (firefox-wayland.override {
-      cfg = {
-        enableGnomeExtensions = true;
-        enableTridactylNative = true;
-      };
-    })
     chromium
     google-chrome
     lynx
@@ -33,7 +39,7 @@
     # Development
     # vimHugeX
     android-studio
-    postman
+    # postman
 
     # Graphics
     blender
@@ -50,7 +56,6 @@
     # Media
     imv
     mpv
-    spot
 
     # Instant Messengers
     discord
@@ -58,8 +63,8 @@
     element-desktop
     unstable.signal-desktop
     slack
-    teams
     zoom-us
+    unstable.telegram-desktop
 
     # Misc
     authy

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home._ = {
     programs.waybar = {
       enable = true;
@@ -22,6 +20,7 @@
             "sway/mode"
             # "custom/scratchpad"
             # "custom/spotify"
+            "custom/notification"
           ];
           modules-center = [
             "clock"
@@ -93,6 +92,22 @@
             max-length = 50;
           };
 
+          "custom/notification" = {
+            tooltip = false;
+            format = "{icon}";
+            format-icons = {
+              notification = "";
+              none = "";
+              dnd-notification = "";
+              dnd-none = "";
+            };
+            return-type = "json";
+            exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+            on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+            on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+            escape = true;
+          };
+
           clock = {
             format = "{:%H:%M}";
             on-click = "gsimplecal";
@@ -130,7 +145,7 @@
               phone = "";
               portable = "";
               car = " ";
-              default = [ "" " " ];
+              default = ["" " "];
             };
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
             on-scroll-up = "";
@@ -164,7 +179,7 @@
             format-charging = "{capacity:3}% ";
             format-plugged = "";
             format-full = "";
-            format-icons = [ " " " " " " " " " " ];
+            format-icons = [" " " " " " " " " "];
           };
 
           tray = {

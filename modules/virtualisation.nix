@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   boot = {
-    kernelParams = [ "intel_iommu=on" ];
+    kernelParams = ["intel_iommu=on"];
     # kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
     # extraModprobeConfig = "options vfio-pci ids=8086:3ea0,8086:9dc8";
   };
@@ -37,5 +39,5 @@
     virt-manager
   ];
 
-  user.extraGroups = [ "docker" "libvirtd" ];
+  user.extraGroups = ["docker" "libvirtd"];
 }

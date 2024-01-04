@@ -29,6 +29,7 @@ ui = auto
 
 [core]
 autocrlf = input
+excludesfile = $HOME/.config/git/ignore, .gitignore, $GIT_DIR/info/exclude
 
 [pager]
 difftool = true
@@ -37,7 +38,7 @@ difftool = true
 tool = difftastic
 
 [difftool]
-prompt = false
+	prompt = false
 
 [difftool "difftastic"]
 cmd = difft "$LOCAL" "$REMOTE"
@@ -54,14 +55,28 @@ commit-decoration-style = bold yellow box ul
 file-style = bold yellow ul
 file-decoration-style = none
 
-[filter "lfs"]
-smudge = git-lfs smudge -- %f
-process = git-lfs filter-process
-required = true
-clean = git-lfs clean -- %f
-
 [init]
 defaultBranch = main
 
 [github]
 user = jul1u5
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[scalar]
+	repo = /home/julius/code/temp/nixpkgs
+[maintenance]
+	repo = /home/julius/code/temp/nixpkgs

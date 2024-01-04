@@ -32,7 +32,7 @@
   grammars' = with lib;
     genAttrs' pkgs.vimPlugins.nvim-treesitter.withAllGrammars.passthru.dependencies
     (v: (replaceStrings ["nvim-treesitter-"] ["tree-sitter-"] (removeSuffix "-grammar" v.name)));
-  grammars = grammars' // generatedGrammars;
+  grammars = grammars'; # // generatedGrammars;
 
   parserDir = with lib;
     pkgs.linkFarm
@@ -51,7 +51,7 @@
       grammars);
 
   buildPlugin = source:
-    pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pkgs.vimUtils.buildVimPlugin {
       inherit (source) pname version src;
     };
 
@@ -103,7 +103,7 @@ in {
         nodePackages.bash-language-server
         nodePackages.graphql-language-service-cli
         nodePackages.vscode-langservers-extracted
-        sumneko-lua-language-server
+        lua-language-server
         nil
 
         # null-ls sources

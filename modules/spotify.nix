@@ -1,15 +1,19 @@
-{ inputs, pkgs, ... }:
-
-let spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
-in
 {
+  inputs,
+  pkgs,
+  ...
+}: let
+  spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
+in {
+  # user.packages = with pkgs; [ spotify ];
+
   home._ = {
-    imports = [ inputs.spicetify-nix.homeManagerModule ];
+    imports = [inputs.spicetify-nix.homeManagerModule];
 
     programs.spicetify = {
       enable = true;
-      theme = spicePkgs.themes.DefaultDynamic;
-      colorScheme = "flamingo";
+      theme = spicePkgs.themes.Default // {replaceColors = false;};
+      # colorScheme = "flamingo";
 
       enabledCustomApps = with spicePkgs.apps; [
         new-releases
@@ -24,7 +28,7 @@ in
         shuffle
 
         copyToClipboard
-        fullAppDisplayMod
+        #fullAppDisplayMod
         genre
         history
         lastfm

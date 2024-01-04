@@ -1,43 +1,42 @@
-{ pkgs, ... }:
-
-let
-  emacsPackage = (pkgs.emacsPackagesFor pkgs.emacs28NativeComp).emacsWithPackages (p: with p; [
-    vterm
-    emacsql-sqlite
-    pdf-tools
-  ]);
-in
-{
-  fonts.fonts = with pkgs; [ emacs-all-the-icons-fonts ];
-
+{pkgs, ...}: let
+  emacsPackage = (pkgs.emacsPackagesFor pkgs.emacs29-pgtk).emacsWithPackages (p:
+    with p; [
+      #vterm
+      #emacsql-sqlite
+      #pdf-tools
+    ]);
+in {
   # TODO: wrap emacs with its dependencies
-  user.packages = [ emacsPackage ] ++ (with pkgs; [
-    parinfer-rust
+  user.packages =
+    [emacsPackage]
+    ++ (with pkgs; [
+      parinfer-rust
 
-    # spell
-    (aspellWithDicts (d: with d; [
-      en
-      en-computers
-      en-science
-      lt
-    ]))
+      # spell
+      (aspellWithDicts (d:
+        with d; [
+          en
+          en-computers
+          en-science
+          lt
+        ]))
 
-    # grammar
-    # languagetool
-    # jre
+      # grammar
+      # languagetool
+      # jre
 
-    # lookup
-    ripgrep
-    sqlite
-    wordnet
+      # lookup
+      ripgrep
+      sqlite
+      wordnet
 
-    # mu4e
-    mu
-    isync
-    html2text
+      # mu4e
+      mu
+      isync
+      html2text
 
-    # pdf-tools
-    poppler
-    texlive.combined.scheme-basic
-  ]);
+      # pdf-tools
+      poppler
+      texlive.combined.scheme-basic
+    ]);
 }

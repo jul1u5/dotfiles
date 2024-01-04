@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }:
-
 {
-  qt5.enable = false;
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  qt.enable = false;
 
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "gnome";
@@ -18,6 +21,13 @@
 
       gtk3.extraConfig = {
         gtk-theme-name = "adw-gtk3-dark";
+      };
+
+      gtk2 = {
+        configLocation = "${home.config.xdg.configHome}/gtk-2.0/gtkrc";
+        extraConfig = ''
+          gtk-theme-name = "Adwaita"
+        '';
       };
 
       iconTheme = {
@@ -62,8 +72,7 @@
           theme=KvLibadwaitaDark
         '';
 
-        "Kvantum/KvLibadwaita".source =
-          "${pkgs.my.kvlibadwaita}/share/Kvantum/KvLibadwaita";
+        "Kvantum/KvLibadwaita".source = "${pkgs.my.kvlibadwaita}/share/Kvantum/KvLibadwaita";
       };
     };
   };
